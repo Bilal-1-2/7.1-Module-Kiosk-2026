@@ -10,7 +10,7 @@ if ($method === 'GET') {
         $id = sanitizeInput($_GET['id']);
 
         try {
-            $query = "SELECT p.*, i.filename, i.description as image_description, c.name as category_name
+            $query = "SELECT p.*, i.filename, i.description as image_description, c.name as category_name, c.categoryfilename
                      FROM products p
                      LEFT JOIN images i ON p.image_id = i.image_id
                      LEFT JOIN categories c ON p.category_id = c.category_id
@@ -36,7 +36,7 @@ if ($method === 'GET') {
         $category = sanitizeInput($_GET['category']);
 
         try {
-            $query = "SELECT p.*, i.filename, i.description as image_description, c.name as category_name
+            $query = "SELECT p.*, i.filename, i.description as image_description, c.name as category_name, c.categoryfilename
                      FROM products p
                      LEFT JOIN images i ON p.image_id = i.image_id
                      LEFT JOIN categories c ON p.category_id = c.category_id
@@ -57,7 +57,7 @@ if ($method === 'GET') {
     // Get vegan products
     if (isset($_GET['vegan']) && $_GET['vegan'] == 1) {
         try {
-            $query = "SELECT p.*, i.filename, i.description as image_description, c.name as category_name
+            $query = "SELECT p.*, i.filename, i.description as image_description, c.name as category_name, c.categoryfilename
                      FROM products p
                      LEFT JOIN images i ON p.image_id = i.image_id
                      LEFT JOIN categories c ON p.category_id = c.category_id
@@ -77,7 +77,7 @@ if ($method === 'GET') {
     // Get vegetarian products
     if (isset($_GET['vegetarian']) && $_GET['vegetarian'] == 1) {
         try {
-            $query = "SELECT p.*, i.filename, i.description as image_description, c.name as category_name
+            $query = "SELECT p.*, i.filename, i.description as image_description, c.name as category_name, c.categoryfilename
                      FROM products p
                      LEFT JOIN images i ON p.image_id = i.image_id
                      LEFT JOIN categories c ON p.category_id = c.category_id
@@ -96,7 +96,7 @@ if ($method === 'GET') {
 
     // Get all available products
     try {
-        $query = "SELECT p.*, i.filename, i.description as image_description, c.name as category_name
+        $query = "SELECT p.*, i.filename, i.description as image_description, c.name as category_name, c.categoryfilename
                  FROM products p
                  LEFT JOIN images i ON p.image_id = i.image_id
                  LEFT JOIN categories c ON p.category_id = c.category_id

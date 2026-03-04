@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 25, 2026 at 01:44 PM
+-- Generation Time: Mar 04, 2026 at 11:48 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -30,20 +30,21 @@ SET time_zone = "+00:00";
 CREATE TABLE `categories` (
   `category_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `description` text DEFAULT NULL
+  `description` text DEFAULT NULL,
+  `categoryfilename` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `categories`
 --
 
-INSERT INTO `categories` (`category_id`, `name`, `description`) VALUES
-(1, 'Breakfast', 'Start your day with our healthy and delicious breakfast options'),
-(2, 'Lunch & Dinner', 'Hearty and nutritious bowls for any time of day'),
-(3, 'Handhelds (Wraps & Sandwiches)', 'Perfect handheld meals for on-the-go'),
-(4, 'Sides & Small Plates', 'Delicious sides to complement your meal'),
-(5, 'Signature Dips', 'House-made dips to elevate any dish'),
-(6, 'Drinks', 'Refreshing beverages and smoothies');
+INSERT INTO `categories` (`category_id`, `name`, `description`, `categoryfilename`) VALUES
+(1, 'Breakfast', 'Start your day with our healthy and delicious breakfast options', 'assets\\images\\menu\\category fotos\\breakfast.png'),
+(2, 'Lunch & Dinner', 'Hearty and nutritious bowls for any time of day', 'assets\\images\\menu\\category fotos\\lunch-dinner.png'),
+(3, 'Handhelds\r\n(Wraps & Sandwiches)', 'Perfect handheld meals for on-the-go', 'assets\\images\\menu\\category fotos\\handhelds.png'),
+(4, 'Sides & Small Plates', 'Delicious sides to complement your meal', 'assets\\images\\menu\\category fotos\\sides.png'),
+(5, 'Signature Dips', 'House-made dips to elevate any dish', 'assets\\images\\menu\\category fotos\\dips.png'),
+(6, 'Drinks', 'Refreshing beverages and smoothies', 'assets\\images\\menu\\category fotos\\drinks.png');
 
 -- --------------------------------------------------------
 
@@ -62,31 +63,31 @@ CREATE TABLE `images` (
 --
 
 INSERT INTO `images` (`image_id`, `filename`, `description`) VALUES
-(1, 'assets/images/menu/Breakfast/Gemini_Generated_Image_l0r92pl0r92pl0r9.png', 'Morning Boost Açaí Bowl'),
-(2, 'assets/images/menu/Breakfast/Gemini_Generated_Image_rin4qyrin4qyrin4.png', 'The Garden Breakfast Wrap'),
-(3, 'assets/images/menu/Breakfast/Gemini_Generated_Image_pr9e2vpr9e2vpr9e.png', 'Peanut Butter & Cacao Toast'),
-(4, 'assets/images/menu/Breakfast/Gemini_Generated_Image_x6oz4sx6oz4sx6oz.png', 'Overnight Oats: Apple Pie Style'),
-(5, 'assets/images/menu/Lunch & Dinner/Gemini_Generated_Image_io68i5io68i5io68 kopie.png', 'Tofu Power Tahini Bowl'),
-(6, 'assets/images/menu/Lunch & Dinner/Gemini_Generated_Image_zhxd7bzhxd7bzhxd kopie.png', 'The Supergreen Harvest'),
-(7, 'assets/images/menu/Lunch & Dinner/Gemini_Generated_Image_oz7mrmoz7mrmoz7m.png', 'Mediterranean Falafel Bowl'),
-(8, 'assets/images/menu/Lunch & Dinner/Gemini_Generated_Image_p1ej7kp1ej7kp1ej.png', 'Warm Teriyaki Tempeh Bowl'),
-(9, 'assets/images/menu/Handhelds/Gemini_Generated_Image_p9dp6p9dp6p9dp6p.png', 'Zesty Chickpea Hummus Wrap'),
-(10, 'assets/images/menu/Handhelds/Gemini_Generated_Image_5aqrk45aqrk45aqr.png', 'Avocado & Halloumi Toastie'),
-(11, 'assets/images/menu/Handhelds/Gemini_Generated_Image_c48jd4c48jd4c48j.png', 'Smoky BBQ Jackfruit Slider'),
-(12, 'assets/images/menu/Sides/Gemini_Generated_Image_ok88tpok88tpok88.png', 'Oven-Baked Sweet Potato Wedges'),
-(13, 'assets/images/menu/Sides/Gemini_Generated_Image_9ofuzw9ofuzw9ofu.png', 'Zucchini Fries'),
-(14, 'assets/images/menu/Sides/Gemini_Generated_Image_2ozhre2ozhre2ozh kopie.png', 'Baked Falafel Bites - 5pcs'),
-(15, 'assets/images/menu/Sides/Gemini_Generated_Image_gvlyv5gvlyv5gvly.png', 'Mini Veggie Platter & Hummus'),
-(16, 'assets/images/menu/Dips/Gemini_Generated_Image_a8r7tsa8r7tsa8r7.png', 'Classic Hummus'),
-(17, 'assets/images/menu/Dips/Gemini_Generated_Image_2t396w2t396w2t39.png', 'Avocado Lime Crema'),
-(18, 'assets/images/menu/Dips/Gemini_Generated_Image_6tnox66tnox66tno.png', 'Greek Yogurt Ranch'),
-(19, 'assets/images/menu/Dips/Gemini_Generated_Image_z91ccez91ccez91c.png', 'Spicy Sriracha Mayo'),
-(20, 'assets/images/menu/Dips/Gemini_Generated_Image_f9zndgf9zndgf9zn.png', 'Peanut Satay Sauce'),
-(21, 'assets/images/menu/Drinks/DALLE_2025-01-22_16.00.35.webp', 'Green Glow Smoothie'),
-(22, 'assets/images/menu/Drinks/DALLE_2025-01-22_16.00.37.webp', 'Iced Matcha Latte'),
-(23, 'assets/images/menu/Drinks/DALLE_2025-01-22_16.00.39.webp', 'Fruit-Infused Water'),
-(24, 'assets/images/menu/Drinks/DALLE_2025-01-22_16.00.42.webp', 'Berry Blast Smoothie'),
-(25, 'assets/images/menu/Drinks/DALLE_2025-01-22_16.00.43.webp', 'Citrus Cooler');
+(1, 'assets/images/menu/Breakfast/Morning-Boost-Acai-Bowl.png', 'Morning Boost Açaí Bowl'),
+(2, 'assets/images/menu/Breakfast/The-Garden-Breakfast-Wrap.png', 'The Garden Breakfast Wrap'),
+(3, 'assets/images/menu/Breakfast/Peanut-Butter-Cacao-Toast.png', 'Peanut Butter & Cacao Toast'),
+(4, 'assets/images/menu/Breakfast/Overnight-Oats-Apple-Pie-Style.png', 'Overnight Oats: Apple Pie Style'),
+(5, 'assets/images/menu/Lunch & Dinner/Tofu-Power-Tahini-Bowl.png', 'Tofu Power Tahini Bowl'),
+(6, 'assets/images/menu/Lunch & Dinner/The-Supergreen-Harvest.png', 'The Supergreen Harvest'),
+(7, 'assets/images/menu/Lunch & Dinner/Mediterranean-Falafel-Bowl.png', 'Mediterranean Falafel Bowl'),
+(8, 'assets/images/menu/Lunch & Dinner/Warm-Teriyaki-Tempeh-Bowl.png', 'Warm Teriyaki Tempeh Bowl'),
+(9, 'assets/images/menu/Handhelds (Wraps & Sandwiches)/Zesty-Chickpea-Hummus-Wrap.png', 'Zesty Chickpea Hummus Wrap'),
+(10, 'assets/images/menu/Handhelds (Wraps & Sandwiches)/Avocado-Halloumi-Toastie.png', 'Avocado & Halloumi Toastie'),
+(11, 'assets/images/menu/Handhelds (Wraps & Sandwiches)/Smoky-BBQ-Jackfruit-Slider.png', 'Smoky BBQ Jackfruit Slider'),
+(12, 'assets/images/menu/Sides & Small Plates/Oven-Baked-Sweet-Potato-Wedges.png', 'Oven-Baked Sweet Potato Wedges'),
+(13, 'assets/images/menu/Sides & Small Plates/Zucchini-Fries.png', 'Zucchini Fries'),
+(14, 'assets/images/menu/Sides & Small Plates/Baked-Falafel-Bites-5pcs.png', 'Baked Falafel Bites - 5pcs'),
+(15, 'assets/images/menu/Sides & Small Plates/Mini-Veggie-Platter-Hummus.png', 'Mini Veggie Platter & Hummus'),
+(16, 'assets/images/menu/Signature Dips/Classic-Hummus.png', 'Classic Hummus'),
+(17, 'assets/images/menu/Signature Dips/Avocado-Lime-Crema.png', 'Avocado Lime Crema'),
+(18, 'assets/images/menu/Signature Dips/Greek-Yogurt-Ranch.png', 'Greek Yogurt Ranch'),
+(19, 'assets/images/menu/Signature Dips/Spicy-Sriracha-Mayo.png', 'Spicy Sriracha Mayo'),
+(20, 'assets/images/menu/Signature Dips/Peanut-Satay-Sauce.png', 'Peanut Satay Sauce'),
+(21, 'assets/images/menu/Drinks/Green-Glow-Smoothie.webp', 'Green Glow Smoothie'),
+(22, 'assets/images/menu/Drinks/Iced-Matcha-Latte.webp', 'Iced Matcha Latte'),
+(23, 'assets/images/menu/Drinks/Fruit-Infused-Water.webp', 'Fruit-Infused Water'),
+(24, 'assets/images/menu/Drinks/Berry-Blast-Smoothie.webp', 'Berry Blast Smoothie'),
+(25, 'assets/images/menu/Drinks/Citrus-Cooler.webp', 'Citrus Cooler');
 
 -- --------------------------------------------------------
 

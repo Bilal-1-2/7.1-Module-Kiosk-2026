@@ -2,6 +2,7 @@
 fetch("http://localhost/7.1-Module-Kiosk-2026/api/products.php")
   .then((response) => response.json())
   .then((data) => {
+    console.log(data.data.items);
     // data.data contains the products array
     const products = data.data.items;
     const container = document.getElementsByClassName("scroll-container")[0];
@@ -15,12 +16,11 @@ fetch("http://localhost/7.1-Module-Kiosk-2026/api/products.php")
       }
     });
 
-    
     // Loop through categories and create HTML (one product per category)
     Object.values(categories).forEach((product) => {
       const html = `
                         <button class="scroll-item" onclick="window.location.href='test2.html?id=${product.category_id}'">
-                        <img src="${product.filename}" >
+                        <img src="${product.categoryfilename}" >
                             <p class="category-name">${product.category_name}</p>
                         </button>
                     `;
