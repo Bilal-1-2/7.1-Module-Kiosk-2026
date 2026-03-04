@@ -1,0 +1,21 @@
+@import "includes/idle.css";
+@import "includes/bestel-overzicht.css";
+@import "includes/betaal.css";
+@import "includes/detail.css";
+/* @import "includes/idle.css"; */
+/* @import "includes/idle.css"; */
+
+.scroll-container {
+  height: 1575px;
+  width: 266px;
+  overflow-y: scroll;
+  border: 1px solid #ccc;
+}
+.scroll-item {
+  height: 174px;
+  width: 228px;
+  background-color: #ffffff;
+  margin: 69px auto;
+  border: 1px solid #0056b3;
+  border-radius: 60px;
+}

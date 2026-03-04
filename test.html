@@ -3,40 +3,319 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Kiosk API Test Page</title>
     <style>
-      .scroll-container {
-        height: 1575px;
-        width: 266px;
-        overflow-y: scroll;
-        border: 1px solid #ccc;
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
       }
-      .scroll-item {
-        height: 174px;
-        width: 228px;
-        background-color: #ffffff;
-        margin: 69px auto;
-        border: 1px solid #0056b3;
-        border-radius: 60px;
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        color: white;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 2.5em;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .card {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      .card h2 {
+        color: #667eea;
+        margin-bottom: 15px;
+        font-size: 1.3em;
+        border-bottom: 2px solid #667eea;
+        padding-bottom: 10px;
+      }
+
+      .card p {
+        color: #666;
+        margin-bottom: 10px;
+        font-size: 0.9em;
+        line-height: 1.5;
+      }
+
+      .button-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 15px;
+      }
+
+      button {
+        background: #667eea;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 0.9em;
+        font-weight: 600;
+        transition: background 0.3s ease;
+      }
+
+      button:hover {
+        background: #764ba2;
+      }
+
+      button:active {
+        background: #5568d3;
+      }
+
+      .results {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        margin-top: 30px;
+      }
+
+      .results h2 {
+        color: #667eea;
+        margin-bottom: 15px;
+        font-size: 1.5em;
+      }
+
+      .result-output {
+        background: #f5f5f5;
+        border-left: 4px solid #667eea;
+        padding: 15px;
+        border-radius: 5px;
+        max-height: 400px;
+        overflow-y: auto;
+        font-family: "Courier New", monospace;
+        font-size: 0.85em;
+        color: #333;
+        white-space: pre-wrap;
+        word-break: break-all;
+      }
+
+      .error {
+        color: #d32f2f;
+        border-left-color: #d32f2f;
+      }
+
+      .success {
+        color: #388e3c;
+        border-left-color: #388e3c;
+      }
+
+      .loading {
+        color: #f57c00;
+        border-left-color: #f57c00;
+      }
+
+      .input-group {
+        margin-bottom: 10px;
+      }
+
+      .input-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+        font-weight: 600;
+        font-size: 0.9em;
+      }
+
+      .input-group input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 0.9em;
+      }
+
+      .input-group input:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
       }
     </style>
   </head>
   <body>
-    <div class="scroll-container">
-      <div class="scroll-item"></div>
-      <div class="scroll-item"></div>
-      <div class="scroll-item"></div>
-      <div class="scroll-item"></div>
-      <div class="scroll-item"></div>
-      <div class="scroll-item"></div>
-      <div class="scroll-item"></div>
-      <div class="scroll-item"></div>
-      <div class="scroll-item"></div>
-      <div class="scroll-item"></div>
-      <div class="scroll-item"></div>
-      <div class="scroll-item"></div>
-      <div class="scroll-item"></div>
-      <div class="scroll-item"></div>
+    <div class="container">
+      <h1>🍽️ Kiosk API Test Page</h1>
+
+      <div class="grid">
+        <!-- Products -->
+        <div class="card">
+          <h2>📦 Products</h2>
+          <p>Fetch all products from the database</p>
+          <div class="button-group">
+            <button onclick="testAPI('/api/products.php')">
+              Get All Products
+            </button>
+            <button onclick="testAPI('/api/products.php?category=1')">
+              Get Breakfast (Cat 1)
+            </button>
+            <button onclick="testAPI('/api/products.php?category=2')">
+              Get Lunch & Dinner (Cat 2)
+            </button>
+            <button onclick="testAPI('/api/products.php?id=26')">
+              Get Single Product (ID 26)
+            </button>
+            <button onclick="testAPI('/api/products.php?vegan=1')">
+              Get Vegan Products
+            </button>
+          </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="card">
+          <h2>📂 Categories</h2>
+          <p>Fetch all categories and their products</p>
+          <div class="button-group">
+            <button onclick="testAPI('/api/categories.php')">
+              Get All Categories
+            </button>
+            <button onclick="testAPI('/api/categories.php?id=1')">
+              Get Category 1 (Breakfast)
+            </button>
+            <button onclick="testAPI('/api/categories.php?id=2')">
+              Get Category 2 (Lunch & Dinner)
+            </button>
+            <button onclick="testAPI('/api/categories.php?id=3')">
+              Get Category 3 (Handhelds)
+            </button>
+          </div>
+        </div>
+
+        <!-- Orders -->
+        <div class="card">
+          <h2>🛒 Orders</h2>
+          <p>Get orders or create a new one</p>
+          <div class="button-group">
+            <button onclick="testAPI('/api/orders.php')">Get All Orders</button>
+            <button onclick="testAPI('/api/orders.php?id=1')">
+              Get Order (ID 1)
+            </button>
+            <button onclick="createOrder()">Create New Order</button>
+            <button onclick="updateOrderStatus()">Update Order Status</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Results -->
+      <div class="results">
+        <h2>📊 Results</h2>
+        <div id="result-output" class="result-output">
+          <span class="loading">Ready to test... Click a button above!</span>
+        </div>
+      </div>
     </div>
+
+    <script>
+      const API_BASE = "http://localhost/7.1-Module-Kiosk-2026";
+
+      // Test API endpoint
+      async function testAPI(endpoint) {
+        const output = document.getElementById("result-output");
+        output.innerHTML = '<span class="loading">⏳ Loading...</span>';
+
+        try {
+          const response = await fetch(API_BASE + endpoint);
+          const data = await response.json();
+
+          if (data.success) {
+            output.innerHTML = `<span class="success">✅ Success!</span>\n\n${JSON.stringify(data, null, 2)}`;
+          } else {
+            output.innerHTML = `<span class="error">❌ Error: ${data.error}</span>\n\n${JSON.stringify(data, null, 2)}`;
+          }
+        } catch (error) {
+          output.innerHTML = `<span class="error">❌ Fetch Error: ${error.message}</span>`;
+        }
+      }
+
+      // Create new order
+      async function createOrder() {
+        const output = document.getElementById("result-output");
+        output.innerHTML = '<span class="loading">⏳ Creating order...</span>';
+
+        try {
+          const response = await fetch(API_BASE + "/api/orders.php", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              products: [26, 27, 28], // Product IDs: Morning Boost Bowl, Garden Wrap, PB Toast
+              pickup_number: "A1",
+            }),
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            output.innerHTML = `<span class="success">✅ Order Created!</span>\n\n${JSON.stringify(data, null, 2)}`;
+          } else {
+            output.innerHTML = `<span class="error">❌ Error: ${data.error}</span>\n\n${JSON.stringify(data, null, 2)}`;
+          }
+        } catch (error) {
+          output.innerHTML = `<span class="error">❌ Fetch Error: ${error.message}</span>`;
+        }
+      }
+
+      // Update order status
+      async function updateOrderStatus() {
+        const output = document.getElementById("result-output");
+        output.innerHTML =
+          '<span class="loading">⏳ Updating order status...</span>';
+
+        try {
+          const response = await fetch(API_BASE + "/api/orders.php?id=1", {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              order_status_id: 2, // Change to "Placed and paid"
+            }),
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            output.innerHTML = `<span class="success">✅ Order Updated!</span>\n\n${JSON.stringify(data, null, 2)}`;
+          } else {
+            output.innerHTML = `<span class="error">❌ Error: ${data.error}</span>\n\n${JSON.stringify(data, null, 2)}`;
+          }
+        } catch (error) {
+          output.innerHTML = `<span class="error">❌ Fetch Error: ${error.message}</span>`;
+        }
+      }
+    </script>
   </body>
 </html>
