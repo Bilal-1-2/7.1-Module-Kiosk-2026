@@ -4,14 +4,117 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="assets/CSS/style.css" />
+    <script src="assets/JS/script.js"></script>
+    <style>
+      /* Idle screen styles */
+      #idle-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        transition: opacity 0.5s ease-in-out;
+      }
+      #idle-screen.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      /* Keep the main content behind */
+      .scroll-container,
+      #products-container {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Idle screen content styling */
+      #idle-screen main {
+        height: 70vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      #idle-screen img {
+        height: 35vh;
+      }
+
+      #idle-screen a {
+        display: flex;
+        width: 100vw;
+        height: 100vh;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        color: white;
+      }
+
+      #idle-screen a:link,
+      #idle-screen a:visited,
+      #idle-screen a:hover,
+      #idle-screen a:active,
+      #idle-screen a:focus {
+        text-decoration: none;
+        color: white;
+        outline: none;
+      }
+
+      #idle-screen .begin {
+        height: 12vh;
+        width: 60vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: red;
+        color: white;
+        border-radius: 6vh;
+        font-size: 4vh;
+        border: 0px;
+        cursor: pointer;
+        text-decoration: none;
+        outline: none;
+      }
+
+      #idle-screen .begin:hover,
+      #idle-screen .begin:focus,
+      #idle-screen .begin:active {
+        background-color: darkred;
+        text-decoration: none;
+        outline: none;
+      }
+    </style>
   </head>
-  <link rel="stylesheet" href="assets/CSS/style.css" />
-  <script src="assets/JS/script.js"></script>
   <body>
+    <!-- Idle screen overlay -->
+    <div id="idle-screen">
+      <a href="#" id="fade-link" style="text-decoration: none">
+        <main>
+          <img src="assets\images\logos\begin.gif" alt="" />
+          <button class="begin">ORDER HERE</button>
+        </main>
+      </a>
+    </div>
+
+    <!-- Main content (hidden behind idle initially) -->
     <aside class="scroll-container"></aside>
-<div id="products-container">
-  
-</div>
-  
+    <div id="products-container"></div>
+
+    <script>
+      // Hide idle screen on click
+      document
+        .getElementById("fade-link")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          const idleScreen = document.getElementById("idle-screen");
+          idleScreen.classList.add("hidden");
+        });
+    </script>
   </body>
 </html>
