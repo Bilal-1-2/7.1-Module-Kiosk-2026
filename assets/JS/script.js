@@ -6,8 +6,7 @@ fetch("http://localhost/7.1-Module-Kiosk-2026/api/products.php")
     // data.data contains the products array
     const products = data.data.items;
     const container = document.getElementsByClassName("scroll-container")[0];
-    const products_container =
-      document.getElementsByClassName("products-container")[0];
+    const products_container = document.getElementById("products-container");
     // Group products by category
     const categories = {};
     products.forEach((product) => {
@@ -25,6 +24,16 @@ fetch("http://localhost/7.1-Module-Kiosk-2026/api/products.php")
                         </button>
                     `;
       container.innerHTML += html;
+    });
+
+    products.forEach((product) => {
+      const html = `
+                        <div class ="product">
+                        <img src="${product.filename}" >
+                            <p class="">${product.name}</p>
+                        </div>
+                    `;
+      products_container.innerHTML += html;
     });
   });
 // <p>${product.description}</p>
