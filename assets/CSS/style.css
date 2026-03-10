@@ -14,6 +14,7 @@ a:focus {
   color: white;
   outline: none;
 }
+
 * {
   font-family: "Noto Sans", sans-serif;
   box-sizing: border-box;
@@ -27,6 +28,7 @@ body {
   background-image: url("../images/d9e083c69c0ad64cc2a1a03dec65cbfe.jpg");
   background-size: cover;
   background-position: center center;
+  background-repeat: no-repeat;
 }
 
 header {
@@ -37,6 +39,7 @@ header {
   align-items: center;
   padding-left: 3vw;
 }
+
 header img {
   height: 50%;
   width: 15%;
@@ -87,6 +90,13 @@ main {
   text-align: center;
 }
 
+/* Products wrapper - contains the products */
+#products-wrapper {
+  width: 100%;
+  overflow-y: auto;
+  background-color: #f7f7f7;
+}
+
 /* Products grid */
 #products-container {
   display: grid;
@@ -94,8 +104,6 @@ main {
   gap: 1.8rem;
   padding: 1.5rem;
   width: 100%;
-  overflow-y: auto;
-  background-color: #f7f7f7;
 }
 
 .product {
@@ -125,6 +133,7 @@ main {
   margin: 0;
   text-align: center;
 }
+
 .product-price {
   font-size: 1rem;
   font-weight: lighter;
@@ -133,19 +142,48 @@ main {
   text-align: center;
 }
 
-/* Scrollbar styling for kiosk */
+/* Scrollbar styling */
 .scroll-container::-webkit-scrollbar,
-#products-container::-webkit-scrollbar {
+#products-wrapper::-webkit-scrollbar {
   width: 12px;
 }
 
 .scroll-container::-webkit-scrollbar-track,
-#products-container::-webkit-scrollbar-track {
+#products-wrapper::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
 
 .scroll-container::-webkit-scrollbar-thumb,
-#products-container::-webkit-scrollbar-thumb {
+#products-wrapper::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 6px;
+}
+
+/* Active category */
+.scroll-item.active {
+  border-color: #8cd003;
+  box-shadow: 0 0 10px rgba(140, 208, 3, 0.5);
+}
+
+/* Processing popup */
+.processing-popup {
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.processing-image {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  margin-bottom: 30px;
+}
+
+.processing-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #053631;
 }
