@@ -9,11 +9,12 @@ if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' || preg_match('/^192\.168\.2/', $
 } else {
     // Online/production omgeving
 
-    // $servername = "localhost";
-    // $username = "u240653_w_b_devs";
-    // $password = "fTzkCnbeDBnsj7xwrL5g"; // Default for XAMPP
-    // $dbname = "u240653_w_b_devs";
+    $servername = "localhost";
+    $username = "u240653_kiosk_db";
+    $password = "D5zTjmaNYmX7sG8SVfsC"; // Default for XAMPP
+    $dbname = "u240653_kiosk_db";
 }
+
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

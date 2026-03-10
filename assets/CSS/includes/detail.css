@@ -83,6 +83,7 @@
   text-align: left;
   margin-bottom: 20px;
 }
+
 .detail-kcal {
   font-size: 2rem;
   color: #666;
@@ -101,7 +102,6 @@
   width: 100%;
   align-self: baseline;
   display: flex;
-
   justify-content: space-between;
   align-items: center;
   gap: 20px;
@@ -188,4 +188,121 @@
 
 .toast-message.show {
   opacity: 1;
+}
+
+/* Dietary Badges */
+.dietary-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: white;
+  z-index: 5;
+}
+
+.dietary-badge.vg {
+  background-color: #8cd003;
+}
+
+.dietary-badge.v {
+  background-color: #ff9800;
+}
+
+/* Product card positioning */
+.product {
+  position: relative;
+}
+
+/* Pairing Popup */
+.pairing-popup {
+  height: 40vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px;
+}
+
+.pairing-content {
+  width: 100%;
+}
+
+.pairing-title {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #053631;
+  margin-bottom: 20px;
+}
+
+.pairing-message {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.pairing-message span {
+  font-weight: bold;
+  color: #8cd003;
+}
+
+.pairing-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.pairing-accept-btn {
+  padding: 15px 40px;
+  font-size: 1.5rem;
+  background-color: #8cd003;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.pairing-accept-btn:hover {
+  background-color: #7ab800;
+}
+
+.pairing-decline-btn {
+  padding: 15px 40px;
+  font-size: 1.5rem;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.pairing-decline-btn:hover {
+  background-color: #d32f2f;
+}
+
+/* Cart total with calories */
+.total-info {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.total-kcal {
+  font-size: 1.6rem;
+  color: #666;
+  margin-left: 20px;
+  font-weight: bold;
+}
+
+.cart-item-kcal {
+  display: block;
+  font-size: 0.9rem;
+  color: #888;
+  margin-top: 5px;
 }

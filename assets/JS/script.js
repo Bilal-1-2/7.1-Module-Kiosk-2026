@@ -1,3 +1,25 @@
+// Pairing rules for sides - "Best with..." suggestions
+const sidePairings = {
+  "Oven-Baked Sweet Potato Wedges": {
+    suggestedDip: "Avocado Lime Crema",
+    suggestedDipId: 42,
+    price: 1.0,
+    kcal: 110,
+  },
+  "Zucchini Fries": {
+    suggestedDip: "Greek Yogurt Ranch",
+    suggestedDipId: 43,
+    price: 1.0,
+    kcal: 90,
+  },
+};
+
+// Get product info by name from the products list
+function getProductByName(name) {
+  const products = window.allProducts || [];
+  return products.find((p) => p.name === name);
+}
+
 // Wait for DOM to be ready
 document.addEventListener("DOMContentLoaded", function () {
   // Language translations
@@ -50,8 +72,14 @@ document.addEventListener("DOMContentLoaded", function () {
   let cart = [];
   let currentCategory = "all";
 
-  // Fetch products from API
-  fetch("http://localhost/7.1-Module-Kiosk-2026/api/products.php")
+  // Fetch products from API - works locally and on live domain
+  const apiBaseUrl =
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1"
+      ? "http://localhost/7.1-Module-Kiosk-2026"
+      : "https://u240653.gluwebsite.nl/Kiosk";
+
+  fetch(apiBaseUrl + "/api/products.php")
     .then((response) => response.json())
     .then((data) => {
       console.log(data.data.items);
@@ -243,10 +271,10 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // Global variables
+let currentProductId = 0;
 let currentProductName = "";
 let currentProductPrice = 0;
 let currentProductImage = "";
-let currentQuantity = 1;
 let currentLang = "nl";
 let cart = [];
 
@@ -295,20 +323,25 @@ const translations = {
 };
 
 // Toggle language for idle screen
-function toggleIdleLanguage() {
-  currentLang = currentLang === "nl" ? "en" : "nl";
-  const langBtn = document.getElementById("idleLangToggle");
-  langBtn.textContent = currentLang === "nl" ? "NL" : "EN";
-  
+function setLanguage(lang) {
+  currentLang = lang;
+
+  // Update button styles
+  document.getElementById("langNL").classList.toggle("active", lang === "nl");
+  document.getElementById("langEN").classList.toggle("active", lang === "en");
+
   // Update idle screen text
   const t = translations[currentLang];
   document.getElementById("order-btn").textContent = t.orderHere;
-  
+
   // Update order options text if visible
-  const eatInBtn = document.querySelector('.begin.eat-in');
-  const takeOutBtn = document.querySelector('.begin.takeout');
+  const eatInBtn = document.querySelector(".begin.eat-in");
+  const takeOutBtn = document.querySelector(".begin.takeout");
   if (eatInBtn) eatInBtn.textContent = t.eatIn;
   if (takeOutBtn) takeOutBtn.textContent = t.takeOut;
+
+  // Update other UI elements
+  window.updateLangText();
 }
 
 // Helper function to hide order review button
@@ -387,21 +420,140 @@ function toggleLanguage() {
     document.getElementById("paymentCancelBtn").textContent = t.cancel;
 }
 
-// Render products
+// Render products with VG/V badges
 function renderProducts(products) {
   const products_container = document.getElementById("products-container");
   products_container.innerHTML = "";
 
   products.forEach((product) => {
+    // dietary badge
+    let badge = "";
+    if (product.is_vegan == 1) {
+      badge = '<span class="dietary-badge vg">VG</span>';
+    } else if (product.is_vegetarian == 1) {
+      badge = '<span class="dietary-badge v">V</span>';
+    }
+
     const html = `<a href='#' onclick="showProductDetail('${product.id}', '${product.name}', '${product.description}', '${product.price}', '${product.filename}', '${product.kcal || 0}')">
       <div class="product">
         <img src="${product.filename}">
+        ${badge}
         <p class="product-name">${product.name}</p>
         <p class="product-price">€${product.price}</p>
       </div>
     </a>`;
     products_container.innerHTML += html;
   });
+}
+
+// Create pairing suggestion popup
+function createPairingPopup() {
+  const pairingOverlay = document.createElement("div");
+  pairingOverlay.className = "detail-overlay pairing-overlay";
+  pairingOverlay.id = "pairingOverlay";
+
+  const pairingPopup = document.createElement("div");
+  pairingPopup.className = "detail-popup pairing-popup";
+  pairingPopup.id = "pairingPopup";
+  pairingPopup.innerHTML = `
+    <div class="pairing-content">
+      <h2 class="pairing-title">Best with...</h2>
+      <p class="pairing-message">Would you like to add <span id="suggestedDipName"></span> (€<span id="suggestedDipPrice"></span>) to your order?</p>
+      <div class="pairing-buttons">
+        <button class="pairing-accept-btn" id="pairingAcceptBtn" onclick="acceptPairing()">Yes, add it!</button>
+        <button class="pairing-decline-btn" id="pairingDeclineBtn" onclick="declinePairing()">No thanks</button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(pairingOverlay);
+  document.body.appendChild(pairingPopup);
+}
+
+// Initialize pairing popup on load
+document.addEventListener("DOMContentLoaded", function () {
+  createPairingPopup();
+});
+
+// Current pairing suggestion data
+let currentPairing = null;
+
+// Show pairing suggestion
+function showPairingSuggestion(sideName) {
+  const pairing = sidePairings[sideName];
+  if (!pairing) return false;
+
+  // Check if the suggested dip is already in cart
+  const alreadyInCart = cart.some((item) => item.name === pairing.suggestedDip);
+  if (alreadyInCart) return false;
+
+  currentPairing = {
+    sideName: sideName,
+    dipName: pairing.suggestedDip,
+    dipPrice: pairing.price,
+    dipKcal: pairing.kcal,
+    dipId: pairing.suggestedDipId,
+  };
+
+  document.getElementById("suggestedDipName").textContent =
+    currentPairing.dipName;
+  document.getElementById("suggestedDipPrice").textContent =
+    currentPairing.dipPrice.toFixed(2);
+  document.getElementById("pairingOverlay").classList.add("active");
+  document.getElementById("pairingPopup").classList.add("active");
+
+  return true;
+}
+
+// Accept pairing - add the suggested dip
+function acceptPairing() {
+  if (currentPairing) {
+    const dipProduct = getProductByName(currentPairing.dipName);
+
+    const existingItem = cart.find(
+      (item) => item.name === currentPairing.dipName,
+    );
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      cart.push({
+        id: Date.now(),
+        name: currentPairing.dipName,
+        price: currentPairing.dipPrice,
+        quantity: 1,
+        image: dipProduct ? dipProduct.filename : "",
+        kcal: currentPairing.dipKcal,
+        product_id: currentPairing.dipId,
+      });
+    }
+
+    updateCartCount();
+
+    const t = translations[currentLang];
+    const toast = document.createElement("div");
+    toast.className = "toast-message";
+    toast.textContent = currentPairing.dipName + " " + t.addedToOrder;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.classList.add("show"), 100);
+    setTimeout(() => {
+      toast.classList.remove("show");
+      setTimeout(() => toast.remove(), 500);
+    }, 3000);
+  }
+
+  closePairingPopup();
+}
+
+// Decline pairing
+function declinePairing() {
+  closePairingPopup();
+}
+
+// Close pairing popup
+function closePairingPopup() {
+  document.getElementById("pairingOverlay").classList.remove("active");
+  document.getElementById("pairingPopup").classList.remove("active");
+  currentPairing = null;
 }
 
 // Change quantity
@@ -469,6 +621,10 @@ function closeProductDetail() {
 function addToCart() {
   const t = translations[currentLang];
 
+  // Get product info for kcal
+  const productInfo = getProductByName(currentProductName);
+  const kcal = productInfo ? productInfo.kcal : 0;
+
   const existingItem = cart.find((item) => item.name === currentProductName);
   if (existingItem) {
     existingItem.quantity += currentQuantity;
@@ -479,6 +635,7 @@ function addToCart() {
       price: currentProductPrice,
       quantity: currentQuantity,
       image: currentProductImage,
+      kcal: kcal,
     });
   }
 
@@ -495,6 +652,11 @@ function addToCart() {
     toast.classList.remove("show");
     setTimeout(() => toast.remove(), 500);
   }, 3000);
+
+  // Check for pairing suggestion
+  setTimeout(() => {
+    showPairingSuggestion(currentProductName);
+  }, 500);
 }
 
 // Update quantity in cart
@@ -515,7 +677,7 @@ function updateCartCount() {
     totalItems > 0 ? "flex" : "none";
 }
 
-// Show review order
+// Show review order with calories
 function showReviewOrder() {
   const t = translations[currentLang];
   const cartItems = document.getElementById("cartItems");
@@ -528,25 +690,32 @@ function showReviewOrder() {
 
   if (cart.length === 0) {
     cartItems.innerHTML = `<p class="empty-cart">${t.emptyCart}</p>`;
-    cartTotal.textContent = "€0.00";
+    cartTotal.innerHTML = `<div class="total-info"><span>€0.00</span><span class="total-kcal">0 kcal</span></div>`;
   } else {
     let html = "";
+    let totalKcal = 0;
     for (let i = 0; i < cart.length; i++) {
       const item = cart[i];
+      const itemKcal = item.kcal ? item.kcal * item.quantity : 0;
+      totalKcal += itemKcal;
       html += `
-        <div class="cart-item">
-          <img class="cart-item-image" src="${item.image}" alt="${item.name}">
-          <div class="cart-item-info">
-            <span class="cart-item-name">${item.name}</span>
-            <div class="cart-item-quantity">
+        <div class="cart-item">     
+               <div class="cart-item-quantity">
               <button class="qty-btn minus" onclick="updateCartItemQuantity(${i}, -1)">-</button>
               <span class="qty-value">${item.quantity}</span>
               <button class="qty-btn plus" onclick="updateCartItemQuantity(${i}, 1)">+</button>
             </div>
+          <img class="cart-item-image" src="${item.image}" alt="${item.name}">
+          <div class="cart-item-info">
+            <span class="cart-item-name">${item.name}</span>
+            <span class="cart-item-kcal">${itemKcal > 0 ? itemKcal + " kcal" : ""}</span>
+
+          </div>
           <div class="cart-item-actions">
             <span class="cart-item-price">€${(item.price * item.quantity).toFixed(2)}</span>
             <button class="cart-remove-btn" onclick="removeFromCart(${i})">${t.remove}</button>
           </div>
+        </div>
       `;
     }
     cartItems.innerHTML = html;
@@ -555,7 +724,7 @@ function showReviewOrder() {
       (sum, item) => sum + item.price * item.quantity,
       0,
     );
-    cartTotal.textContent = "€" + total.toFixed(2);
+    cartTotal.innerHTML = `<div class="total-info"><span>€${total.toFixed(2)}</span><span class="total-kcal">${totalKcal} kcal</span></div>`;
   }
 
   hideOrderReviewButton();

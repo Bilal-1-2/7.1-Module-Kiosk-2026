@@ -2,29 +2,35 @@
 // Set response header to JSON
 header("Content-Type: application/json; charset=UTF-8");
 
-// CORS Headers - Allow cross-origin requests
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-
-// Handle preflight requests
-if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-    http_response_code(200);
-    exit();
-}
-
 // Database Configuration Class
 class Database
 {
-    private $host = "localhost";
-    private $db_name = "kiosk_db";
-    private $username = "root";
-    private $password = "";
+    private $host;
+    private $db_name;
+    private $username;
+    private $password;
     public $conn;
 
     public function getConnection()
     {
         $this->conn = null;
+
+        // Auto-detect environment
+        $hostname = $_SERVER['HTTP_HOST'] ?? '';
+
+        if (strpos($hostname, 'localhost') !== false || strpos($hostname, '127.0.0.1') !== false) {
+            // Local development (XAMPP)
+            $this->host = "localhost";
+            $this->db_name = "kiosk_db";
+            $this->username = "root";
+            $this->password = "";
+        } else {
+            // Live server - UPDATE THESE with your actual hosting credentials
+            $this->host = "localhost";  // Usually 'localhost' on shared hosting
+            $this->db_name = "u240653_kiosk_db";  // Check your hosting panel for correct name
+            $this->username = "u240653_kiosk_db";  // Check your hosting panel
+            $this->password = "D5zTjmaNYmX7sG8SVfsC";  // YOUR DATABASE PASSWORD
+        }
 
         try {
             $this->conn = new PDO(
