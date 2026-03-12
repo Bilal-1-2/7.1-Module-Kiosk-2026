@@ -14,6 +14,12 @@ a:focus {
   color: white;
   outline: none;
 }
+.payment-btn,
+.detail-cancel-btn,
+.detail-add-btn {
+
+  pointer-events: auto;
+}
 
 * {
   font-family: "Noto Sans", sans-serif;

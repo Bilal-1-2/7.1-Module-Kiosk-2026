@@ -1,0 +1,1262 @@
+[2026-03-12 03:24:11] === New order request started ===
+[2026-03-12 03:24:11] Database connected successfully
+[2026-03-12 03:24:11] Request method: POST
+[2026-03-12 03:24:11] Processing POST request
+[2026-03-12 03:24:11] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 33
+            [1] => 33
+            [2] => 27
+            [3] => 37
+            [4] => 42
+        )
+
+    [pickup_number] => 20
+)
+
+[2026-03-12 03:24:11] Pickup number: 20
+[2026-03-12 03:24:11] Checking product ID: 33
+[2026-03-12 03:24:11] Product 33 price: 11.00
+[2026-03-12 03:24:11] Checking product ID: 33
+[2026-03-12 03:24:11] Product 33 price: 11.00
+[2026-03-12 03:24:11] Checking product ID: 27
+[2026-03-12 03:24:11] Product 27 price: 6.50
+[2026-03-12 03:24:11] Checking product ID: 37
+[2026-03-12 03:24:11] Product 37 price: 4.50
+[2026-03-12 03:24:11] Checking product ID: 42
+[2026-03-12 03:24:11] Product 42 price: 1.00
+[2026-03-12 03:24:11] Total price calculated: 34
+[2026-03-12 03:24:11] Valid product IDs: 33, 33, 27, 37, 42
+[2026-03-12 03:24:11] Transaction started
+[2026-03-12 03:24:11] Order inserted with ID: 2
+[2026-03-12 03:24:11] Inserting order_product: order_id=2, product_id=33, price=11
+[2026-03-12 03:24:11] Inserting order_product: order_id=2, product_id=33, price=11
+[2026-03-12 03:24:11] Transaction rolled back due to PDO error
+[2026-03-12 03:24:11] PDO Error: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2-33' for key 'PRIMARY'
+[2026-03-12 03:24:29] === New order request started ===
+[2026-03-12 03:24:29] Database connected successfully
+[2026-03-12 03:24:29] Request method: POST
+[2026-03-12 03:24:29] Processing POST request
+[2026-03-12 03:24:29] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 33
+            [1] => 29
+            [2] => 38
+            [3] => 43
+        )
+
+    [pickup_number] => 20
+)
+
+[2026-03-12 03:24:29] Pickup number: 20
+[2026-03-12 03:24:29] Checking product ID: 33
+[2026-03-12 03:24:29] Product 33 price: 11.00
+[2026-03-12 03:24:29] Checking product ID: 29
+[2026-03-12 03:24:29] Product 29 price: 5.50
+[2026-03-12 03:24:29] Checking product ID: 38
+[2026-03-12 03:24:30] Product 38 price: 4.50
+[2026-03-12 03:24:30] Checking product ID: 43
+[2026-03-12 03:24:30] Product 43 price: 1.00
+[2026-03-12 03:24:30] Total price calculated: 22
+[2026-03-12 03:24:30] Valid product IDs: 33, 29, 38, 43
+[2026-03-12 03:24:30] Transaction started
+[2026-03-12 03:24:30] Order inserted with ID: 3
+[2026-03-12 03:24:30] Inserting order_product: order_id=3, product_id=33, price=11
+[2026-03-12 03:24:30] Inserting order_product: order_id=3, product_id=29, price=5.5
+[2026-03-12 03:24:30] Inserting order_product: order_id=3, product_id=38, price=4.5
+[2026-03-12 03:24:30] Inserting order_product: order_id=3, product_id=43, price=1
+[2026-03-12 03:24:30] Transaction committed successfully
+[2026-03-12 03:24:30] Order creation successful, returning response
+[2026-03-12 03:24:41] === New order request started ===
+[2026-03-12 03:24:41] Database connected successfully
+[2026-03-12 03:24:41] Request method: POST
+[2026-03-12 03:24:41] Processing POST request
+[2026-03-12 03:24:41] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 33
+            [1] => 26
+        )
+
+    [pickup_number] => 57
+)
+
+[2026-03-12 03:24:41] Pickup number: 57
+[2026-03-12 03:24:41] Checking product ID: 33
+[2026-03-12 03:24:41] Product 33 price: 11.00
+[2026-03-12 03:24:41] Checking product ID: 26
+[2026-03-12 03:24:41] Product 26 price: 7.50
+[2026-03-12 03:24:41] Total price calculated: 18.5
+[2026-03-12 03:24:41] Valid product IDs: 33, 26
+[2026-03-12 03:24:41] Transaction started
+[2026-03-12 03:24:41] Order inserted with ID: 4
+[2026-03-12 03:24:41] Inserting order_product: order_id=4, product_id=33, price=11
+[2026-03-12 03:24:41] Inserting order_product: order_id=4, product_id=26, price=7.5
+[2026-03-12 03:24:41] Transaction committed successfully
+[2026-03-12 03:24:41] Order creation successful, returning response
+[2026-03-12 03:25:54] === New order request started ===
+[2026-03-12 03:25:54] Database connected successfully
+[2026-03-12 03:25:54] Request method: POST
+[2026-03-12 03:25:54] Processing POST request
+[2026-03-12 03:25:54] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 26
+            [1] => 26
+            [2] => 37
+            [3] => 42
+        )
+
+    [pickup_number] => 58
+)
+
+[2026-03-12 03:25:54] Pickup number: 58
+[2026-03-12 03:25:54] Checking product ID: 26
+[2026-03-12 03:25:54] Product 26 price: 7.50
+[2026-03-12 03:25:54] Checking product ID: 26
+[2026-03-12 03:25:54] Product 26 price: 7.50
+[2026-03-12 03:25:54] Checking product ID: 37
+[2026-03-12 03:25:54] Product 37 price: 4.50
+[2026-03-12 03:25:54] Checking product ID: 42
+[2026-03-12 03:25:54] Product 42 price: 1.00
+[2026-03-12 03:25:54] Total price calculated: 20.5
+[2026-03-12 03:25:54] Valid product IDs: 26, 26, 37, 42
+[2026-03-12 03:25:54] Transaction started
+[2026-03-12 03:25:54] Order inserted with ID: 5
+[2026-03-12 03:25:54] Inserting order_product: order_id=5, product_id=26, price=7.5
+[2026-03-12 03:25:54] Inserting order_product: order_id=5, product_id=26, price=7.5
+[2026-03-12 03:25:54] Transaction rolled back due to PDO error
+[2026-03-12 03:25:54] PDO Error: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '5-26' for key 'PRIMARY'
+[2026-03-12 03:26:11] === New order request started ===
+[2026-03-12 03:26:11] Database connected successfully
+[2026-03-12 03:26:11] Request method: POST
+[2026-03-12 03:26:11] Processing POST request
+[2026-03-12 03:26:11] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 30
+            [1] => 39
+            [2] => 42
+            [3] => 37
+        )
+
+    [pickup_number] => 99
+)
+
+[2026-03-12 03:26:11] Pickup number: 99
+[2026-03-12 03:26:11] Checking product ID: 30
+[2026-03-12 03:26:11] Product 30 price: 10.50
+[2026-03-12 03:26:11] Checking product ID: 39
+[2026-03-12 03:26:11] Product 39 price: 5.00
+[2026-03-12 03:26:11] Checking product ID: 42
+[2026-03-12 03:26:11] Product 42 price: 1.00
+[2026-03-12 03:26:11] Checking product ID: 37
+[2026-03-12 03:26:11] Product 37 price: 4.50
+[2026-03-12 03:26:11] Total price calculated: 21
+[2026-03-12 03:26:11] Valid product IDs: 30, 39, 42, 37
+[2026-03-12 03:26:11] Transaction started
+[2026-03-12 03:26:12] Order inserted with ID: 6
+[2026-03-12 03:26:12] Inserting order_product: order_id=6, product_id=30, price=10.5
+[2026-03-12 03:26:12] Inserting order_product: order_id=6, product_id=39, price=5
+[2026-03-12 03:26:12] Inserting order_product: order_id=6, product_id=42, price=1
+[2026-03-12 03:26:12] Inserting order_product: order_id=6, product_id=37, price=4.5
+[2026-03-12 03:26:12] Transaction committed successfully
+[2026-03-12 03:26:12] Order creation successful, returning response
+[2026-03-12 03:28:10] === New order request started ===
+[2026-03-12 03:28:10] Database connected successfully
+[2026-03-12 03:28:10] Request method: POST
+[2026-03-12 03:28:10] Processing POST request
+[2026-03-12 03:28:10] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 32
+            [1] => 34
+        )
+
+    [pickup_number] => 90
+)
+
+[2026-03-12 03:28:10] Pickup number: 90
+[2026-03-12 03:28:10] Checking product ID: 32
+[2026-03-12 03:28:10] Product 32 price: 10.00
+[2026-03-12 03:28:10] Checking product ID: 34
+[2026-03-12 03:28:10] Product 34 price: 8.50
+[2026-03-12 03:28:10] Total price calculated: 18.5
+[2026-03-12 03:28:10] Valid product IDs: 32, 34
+[2026-03-12 03:28:10] Transaction started
+[2026-03-12 03:28:10] Order inserted with ID: 7
+[2026-03-12 03:28:10] Inserting order_product: order_id=7, product_id=32, price=10
+[2026-03-12 03:28:10] Inserting order_product: order_id=7, product_id=34, price=8.5
+[2026-03-12 03:28:10] Transaction committed successfully
+[2026-03-12 03:28:10] Order creation successful, returning response
+[2026-03-12 03:28:35] === New order request started ===
+[2026-03-12 03:28:35] Database connected successfully
+[2026-03-12 03:28:35] Request method: POST
+[2026-03-12 03:28:35] Processing POST request
+[2026-03-12 03:28:35] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 39
+        )
+
+    [pickup_number] => 40
+)
+
+[2026-03-12 03:28:35] Pickup number: 40
+[2026-03-12 03:28:35] Checking product ID: 39
+[2026-03-12 03:28:35] Product 39 price: 5.00
+[2026-03-12 03:28:35] Total price calculated: 5
+[2026-03-12 03:28:35] Valid product IDs: 39
+[2026-03-12 03:28:35] Transaction started
+[2026-03-12 03:28:35] Order inserted with ID: 8
+[2026-03-12 03:28:35] Inserting order_product: order_id=8, product_id=39, price=5
+[2026-03-12 03:28:35] Transaction committed successfully
+[2026-03-12 03:28:35] Order creation successful, returning response
+[2026-03-12 03:31:24] === New order request started ===
+[2026-03-12 03:31:24] Database connected successfully
+[2026-03-12 03:31:24] Request method: POST
+[2026-03-12 03:31:24] Processing POST request
+[2026-03-12 03:31:24] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 26
+            [1] => 27
+        )
+
+    [pickup_number] => 12
+)
+
+[2026-03-12 03:31:24] Pickup number: 12
+[2026-03-12 03:31:24] Checking product ID: 26
+[2026-03-12 03:31:24] Product 26 price: 7.50
+[2026-03-12 03:31:24] Checking product ID: 27
+[2026-03-12 03:31:24] Product 27 price: 6.50
+[2026-03-12 03:31:24] Total price calculated: 14
+[2026-03-12 03:31:24] Valid product IDs: 26, 27
+[2026-03-12 03:31:24] Transaction started
+[2026-03-12 03:31:24] Order inserted with ID: 9
+[2026-03-12 03:31:24] Inserting order_product: order_id=9, product_id=26, price=7.5
+[2026-03-12 03:31:24] Inserting order_product: order_id=9, product_id=27, price=6.5
+[2026-03-12 03:31:24] Transaction committed successfully
+[2026-03-12 03:31:24] Order creation successful, returning response
+[2026-03-12 03:31:25] === New order request started ===
+[2026-03-12 03:31:25] Database connected successfully
+[2026-03-12 03:31:25] Request method: POST
+[2026-03-12 03:31:25] Processing POST request
+[2026-03-12 03:31:25] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 26
+            [1] => 27
+        )
+
+    [pickup_number] => 12
+)
+
+[2026-03-12 03:31:25] Pickup number: 12
+[2026-03-12 03:31:25] Checking product ID: 26
+[2026-03-12 03:31:25] Product 26 price: 7.50
+[2026-03-12 03:31:25] Checking product ID: 27
+[2026-03-12 03:31:25] Product 27 price: 6.50
+[2026-03-12 03:31:25] Total price calculated: 14
+[2026-03-12 03:31:25] Valid product IDs: 26, 27
+[2026-03-12 03:31:25] Transaction started
+[2026-03-12 03:31:25] Order inserted with ID: 10
+[2026-03-12 03:31:25] Inserting order_product: order_id=10, product_id=26, price=7.5
+[2026-03-12 03:31:25] Inserting order_product: order_id=10, product_id=27, price=6.5
+[2026-03-12 03:31:25] Transaction committed successfully
+[2026-03-12 03:31:25] Order creation successful, returning response
+[2026-03-12 03:31:26] === New order request started ===
+[2026-03-12 03:31:26] Database connected successfully
+[2026-03-12 03:31:26] Request method: POST
+[2026-03-12 03:31:26] Processing POST request
+[2026-03-12 03:31:26] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 26
+            [1] => 27
+        )
+
+    [pickup_number] => 12
+)
+
+[2026-03-12 03:31:26] Pickup number: 12
+[2026-03-12 03:31:26] Checking product ID: 26
+[2026-03-12 03:31:26] Product 26 price: 7.50
+[2026-03-12 03:31:26] Checking product ID: 27
+[2026-03-12 03:31:26] Product 27 price: 6.50
+[2026-03-12 03:31:26] Total price calculated: 14
+[2026-03-12 03:31:26] Valid product IDs: 26, 27
+[2026-03-12 03:31:26] Transaction started
+[2026-03-12 03:31:26] Order inserted with ID: 11
+[2026-03-12 03:31:26] Inserting order_product: order_id=11, product_id=26, price=7.5
+[2026-03-12 03:31:26] Inserting order_product: order_id=11, product_id=27, price=6.5
+[2026-03-12 03:31:26] Transaction committed successfully
+[2026-03-12 03:31:26] Order creation successful, returning response
+[2026-03-12 03:31:26] === New order request started ===
+[2026-03-12 03:31:26] Database connected successfully
+[2026-03-12 03:31:26] Request method: POST
+[2026-03-12 03:31:26] Processing POST request
+[2026-03-12 03:31:26] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 26
+            [1] => 27
+        )
+
+    [pickup_number] => 12
+)
+
+[2026-03-12 03:31:26] Pickup number: 12
+[2026-03-12 03:31:26] Checking product ID: 26
+[2026-03-12 03:31:26] Product 26 price: 7.50
+[2026-03-12 03:31:26] Checking product ID: 27
+[2026-03-12 03:31:26] Product 27 price: 6.50
+[2026-03-12 03:31:26] Total price calculated: 14
+[2026-03-12 03:31:26] Valid product IDs: 26, 27
+[2026-03-12 03:31:26] Transaction started
+[2026-03-12 03:31:26] Order inserted with ID: 12
+[2026-03-12 03:31:26] Inserting order_product: order_id=12, product_id=26, price=7.5
+[2026-03-12 03:31:26] Inserting order_product: order_id=12, product_id=27, price=6.5
+[2026-03-12 03:31:26] Transaction committed successfully
+[2026-03-12 03:31:26] Order creation successful, returning response
+[2026-03-12 03:31:27] === New order request started ===
+[2026-03-12 03:31:27] Database connected successfully
+[2026-03-12 03:31:27] Request method: POST
+[2026-03-12 03:31:27] Processing POST request
+[2026-03-12 03:31:27] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 26
+            [1] => 27
+        )
+
+    [pickup_number] => 12
+)
+
+[2026-03-12 03:31:27] Pickup number: 12
+[2026-03-12 03:31:27] Checking product ID: 26
+[2026-03-12 03:31:27] Product 26 price: 7.50
+[2026-03-12 03:31:27] Checking product ID: 27
+[2026-03-12 03:31:27] Product 27 price: 6.50
+[2026-03-12 03:31:27] Total price calculated: 14
+[2026-03-12 03:31:27] Valid product IDs: 26, 27
+[2026-03-12 03:31:27] Transaction started
+[2026-03-12 03:31:27] Order inserted with ID: 13
+[2026-03-12 03:31:27] Inserting order_product: order_id=13, product_id=26, price=7.5
+[2026-03-12 03:31:27] Inserting order_product: order_id=13, product_id=27, price=6.5
+[2026-03-12 03:31:27] Transaction committed successfully
+[2026-03-12 03:31:27] Order creation successful, returning response
+[2026-03-12 03:31:27] === New order request started ===
+[2026-03-12 03:31:27] Database connected successfully
+[2026-03-12 03:31:27] Request method: POST
+[2026-03-12 03:31:27] Processing POST request
+[2026-03-12 03:31:27] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 26
+            [1] => 27
+        )
+
+    [pickup_number] => 12
+)
+
+[2026-03-12 03:31:27] Pickup number: 12
+[2026-03-12 03:31:27] Checking product ID: 26
+[2026-03-12 03:31:27] Product 26 price: 7.50
+[2026-03-12 03:31:27] Checking product ID: 27
+[2026-03-12 03:31:27] Product 27 price: 6.50
+[2026-03-12 03:31:27] Total price calculated: 14
+[2026-03-12 03:31:27] Valid product IDs: 26, 27
+[2026-03-12 03:31:27] Transaction started
+[2026-03-12 03:31:27] Order inserted with ID: 14
+[2026-03-12 03:31:27] Inserting order_product: order_id=14, product_id=26, price=7.5
+[2026-03-12 03:31:27] Inserting order_product: order_id=14, product_id=27, price=6.5
+[2026-03-12 03:31:27] Transaction committed successfully
+[2026-03-12 03:31:27] Order creation successful, returning response
+[2026-03-12 03:31:28] === New order request started ===
+[2026-03-12 03:31:28] Database connected successfully
+[2026-03-12 03:31:28] Request method: POST
+[2026-03-12 03:31:28] Processing POST request
+[2026-03-12 03:31:28] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 26
+            [1] => 27
+        )
+
+    [pickup_number] => 12
+)
+
+[2026-03-12 03:31:28] Pickup number: 12
+[2026-03-12 03:31:28] Checking product ID: 26
+[2026-03-12 03:31:28] Product 26 price: 7.50
+[2026-03-12 03:31:28] Checking product ID: 27
+[2026-03-12 03:31:28] Product 27 price: 6.50
+[2026-03-12 03:31:28] Total price calculated: 14
+[2026-03-12 03:31:28] Valid product IDs: 26, 27
+[2026-03-12 03:31:28] Transaction started
+[2026-03-12 03:31:28] Order inserted with ID: 15
+[2026-03-12 03:31:28] Inserting order_product: order_id=15, product_id=26, price=7.5
+[2026-03-12 03:31:28] Inserting order_product: order_id=15, product_id=27, price=6.5
+[2026-03-12 03:31:28] Transaction committed successfully
+[2026-03-12 03:31:28] Order creation successful, returning response
+[2026-03-12 03:31:28] === New order request started ===
+[2026-03-12 03:31:28] Database connected successfully
+[2026-03-12 03:31:28] Request method: POST
+[2026-03-12 03:31:28] Processing POST request
+[2026-03-12 03:31:28] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 26
+            [1] => 27
+        )
+
+    [pickup_number] => 12
+)
+
+[2026-03-12 03:31:28] Pickup number: 12
+[2026-03-12 03:31:28] Checking product ID: 26
+[2026-03-12 03:31:28] Product 26 price: 7.50
+[2026-03-12 03:31:28] Checking product ID: 27
+[2026-03-12 03:31:28] Product 27 price: 6.50
+[2026-03-12 03:31:28] Total price calculated: 14
+[2026-03-12 03:31:28] Valid product IDs: 26, 27
+[2026-03-12 03:31:28] Transaction started
+[2026-03-12 03:31:28] Order inserted with ID: 16
+[2026-03-12 03:31:28] Inserting order_product: order_id=16, product_id=26, price=7.5
+[2026-03-12 03:31:28] === New order request started ===
+[2026-03-12 03:31:28] Inserting order_product: order_id=16, product_id=27, price=6.5
+[2026-03-12 03:31:28] Transaction committed successfully
+[2026-03-12 03:31:28] Order creation successful, returning response
+[2026-03-12 03:31:28] Database connected successfully
+[2026-03-12 03:31:28] Request method: POST
+[2026-03-12 03:31:28] Processing POST request
+[2026-03-12 03:31:28] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 26
+            [1] => 27
+        )
+
+    [pickup_number] => 12
+)
+
+[2026-03-12 03:31:28] Pickup number: 12
+[2026-03-12 03:31:28] Checking product ID: 26
+[2026-03-12 03:31:28] Product 26 price: 7.50
+[2026-03-12 03:31:28] Checking product ID: 27
+[2026-03-12 03:31:28] Product 27 price: 6.50
+[2026-03-12 03:31:28] Total price calculated: 14
+[2026-03-12 03:31:28] Valid product IDs: 26, 27
+[2026-03-12 03:31:28] Transaction started
+[2026-03-12 03:31:28] Order inserted with ID: 17
+[2026-03-12 03:31:28] Inserting order_product: order_id=17, product_id=26, price=7.5
+[2026-03-12 03:31:28] Inserting order_product: order_id=17, product_id=27, price=6.5
+[2026-03-12 03:31:28] Transaction committed successfully
+[2026-03-12 03:31:28] Order creation successful, returning response
+[2026-03-12 03:31:29] === New order request started ===
+[2026-03-12 03:31:29] Database connected successfully
+[2026-03-12 03:31:29] Request method: POST
+[2026-03-12 03:31:29] Processing POST request
+[2026-03-12 03:31:29] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 26
+            [1] => 27
+        )
+
+    [pickup_number] => 12
+)
+
+[2026-03-12 03:31:29] Pickup number: 12
+[2026-03-12 03:31:29] Checking product ID: 26
+[2026-03-12 03:31:29] Product 26 price: 7.50
+[2026-03-12 03:31:29] Checking product ID: 27
+[2026-03-12 03:31:29] Product 27 price: 6.50
+[2026-03-12 03:31:29] Total price calculated: 14
+[2026-03-12 03:31:29] Valid product IDs: 26, 27
+[2026-03-12 03:31:29] Transaction started
+[2026-03-12 03:31:29] Order inserted with ID: 18
+[2026-03-12 03:31:29] Inserting order_product: order_id=18, product_id=26, price=7.5
+[2026-03-12 03:31:29] Inserting order_product: order_id=18, product_id=27, price=6.5
+[2026-03-12 03:31:29] Transaction committed successfully
+[2026-03-12 03:31:29] Order creation successful, returning response
+[2026-03-12 03:31:29] === New order request started ===
+[2026-03-12 03:31:29] Database connected successfully
+[2026-03-12 03:31:29] Request method: POST
+[2026-03-12 03:31:29] Processing POST request
+[2026-03-12 03:31:29] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 26
+            [1] => 27
+        )
+
+    [pickup_number] => 12
+)
+
+[2026-03-12 03:31:29] Pickup number: 12
+[2026-03-12 03:31:29] Checking product ID: 26
+[2026-03-12 03:31:29] Product 26 price: 7.50
+[2026-03-12 03:31:29] Checking product ID: 27
+[2026-03-12 03:31:29] Product 27 price: 6.50
+[2026-03-12 03:31:29] Total price calculated: 14
+[2026-03-12 03:31:29] Valid product IDs: 26, 27
+[2026-03-12 03:31:29] Transaction started
+[2026-03-12 03:31:29] Order inserted with ID: 19
+[2026-03-12 03:31:29] Inserting order_product: order_id=19, product_id=26, price=7.5
+[2026-03-12 03:31:29] Inserting order_product: order_id=19, product_id=27, price=6.5
+[2026-03-12 03:31:29] Transaction committed successfully
+[2026-03-12 03:31:29] Order creation successful, returning response
+[2026-03-12 03:31:32] === New order request started ===
+[2026-03-12 03:31:32] Database connected successfully
+[2026-03-12 03:31:32] Request method: POST
+[2026-03-12 03:31:32] Processing POST request
+[2026-03-12 03:31:32] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 26
+            [1] => 27
+        )
+
+    [pickup_number] => 12
+)
+
+[2026-03-12 03:31:32] Pickup number: 12
+[2026-03-12 03:31:32] Checking product ID: 26
+[2026-03-12 03:31:32] Product 26 price: 7.50
+[2026-03-12 03:31:32] Checking product ID: 27
+[2026-03-12 03:31:32] Product 27 price: 6.50
+[2026-03-12 03:31:32] Total price calculated: 14
+[2026-03-12 03:31:32] Valid product IDs: 26, 27
+[2026-03-12 03:31:32] Transaction started
+[2026-03-12 03:31:32] Order inserted with ID: 20
+[2026-03-12 03:31:32] Inserting order_product: order_id=20, product_id=26, price=7.5
+[2026-03-12 03:31:32] Inserting order_product: order_id=20, product_id=27, price=6.5
+[2026-03-12 03:31:32] Transaction committed successfully
+[2026-03-12 03:31:32] Order creation successful, returning response
+[2026-03-12 03:31:33] === New order request started ===
+[2026-03-12 03:31:33] Database connected successfully
+[2026-03-12 03:31:33] Request method: POST
+[2026-03-12 03:31:33] Processing POST request
+[2026-03-12 03:31:33] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 26
+            [1] => 27
+        )
+
+    [pickup_number] => 12
+)
+
+[2026-03-12 03:31:33] Pickup number: 12
+[2026-03-12 03:31:33] Checking product ID: 26
+[2026-03-12 03:31:33] Product 26 price: 7.50
+[2026-03-12 03:31:33] Checking product ID: 27
+[2026-03-12 03:31:33] Product 27 price: 6.50
+[2026-03-12 03:31:33] Total price calculated: 14
+[2026-03-12 03:31:33] Valid product IDs: 26, 27
+[2026-03-12 03:31:33] Transaction started
+[2026-03-12 03:31:33] Order inserted with ID: 21
+[2026-03-12 03:31:33] Inserting order_product: order_id=21, product_id=26, price=7.5
+[2026-03-12 03:31:33] Inserting order_product: order_id=21, product_id=27, price=6.5
+[2026-03-12 03:31:33] Transaction committed successfully
+[2026-03-12 03:31:33] Order creation successful, returning response
+[2026-03-12 03:31:34] === New order request started ===
+[2026-03-12 03:31:34] Database connected successfully
+[2026-03-12 03:31:34] Request method: POST
+[2026-03-12 03:31:34] Processing POST request
+[2026-03-12 03:31:34] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 26
+            [1] => 27
+        )
+
+    [pickup_number] => 12
+)
+
+[2026-03-12 03:31:34] Pickup number: 12
+[2026-03-12 03:31:34] Checking product ID: 26
+[2026-03-12 03:31:34] Product 26 price: 7.50
+[2026-03-12 03:31:34] Checking product ID: 27
+[2026-03-12 03:31:34] Product 27 price: 6.50
+[2026-03-12 03:31:34] Total price calculated: 14
+[2026-03-12 03:31:34] Valid product IDs: 26, 27
+[2026-03-12 03:31:34] Transaction started
+[2026-03-12 03:31:34] Order inserted with ID: 22
+[2026-03-12 03:31:34] Inserting order_product: order_id=22, product_id=26, price=7.5
+[2026-03-12 03:31:34] Inserting order_product: order_id=22, product_id=27, price=6.5
+[2026-03-12 03:31:34] Transaction committed successfully
+[2026-03-12 03:31:34] Order creation successful, returning response
+[2026-03-12 03:31:34] === New order request started ===
+[2026-03-12 03:31:34] Database connected successfully
+[2026-03-12 03:31:34] Request method: POST
+[2026-03-12 03:31:34] Processing POST request
+[2026-03-12 03:31:34] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 26
+            [1] => 27
+        )
+
+    [pickup_number] => 12
+)
+
+[2026-03-12 03:31:34] Pickup number: 12
+[2026-03-12 03:31:34] Checking product ID: 26
+[2026-03-12 03:31:34] Product 26 price: 7.50
+[2026-03-12 03:31:34] Checking product ID: 27
+[2026-03-12 03:31:34] Product 27 price: 6.50
+[2026-03-12 03:31:34] Total price calculated: 14
+[2026-03-12 03:31:34] Valid product IDs: 26, 27
+[2026-03-12 03:31:34] Transaction started
+[2026-03-12 03:31:34] Order inserted with ID: 23
+[2026-03-12 03:31:34] Inserting order_product: order_id=23, product_id=26, price=7.5
+[2026-03-12 03:31:34] Inserting order_product: order_id=23, product_id=27, price=6.5
+[2026-03-12 03:31:34] Transaction committed successfully
+[2026-03-12 03:31:34] Order creation successful, returning response
+[2026-03-12 03:31:35] === New order request started ===
+[2026-03-12 03:31:35] Database connected successfully
+[2026-03-12 03:31:35] Request method: POST
+[2026-03-12 03:31:35] Processing POST request
+[2026-03-12 03:31:35] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 26
+            [1] => 27
+        )
+
+    [pickup_number] => 12
+)
+
+[2026-03-12 03:31:35] Pickup number: 12
+[2026-03-12 03:31:35] Checking product ID: 26
+[2026-03-12 03:31:35] Product 26 price: 7.50
+[2026-03-12 03:31:35] Checking product ID: 27
+[2026-03-12 03:31:35] Product 27 price: 6.50
+[2026-03-12 03:31:35] Total price calculated: 14
+[2026-03-12 03:31:35] Valid product IDs: 26, 27
+[2026-03-12 03:31:35] Transaction started
+[2026-03-12 03:31:35] Order inserted with ID: 24
+[2026-03-12 03:31:35] Inserting order_product: order_id=24, product_id=26, price=7.5
+[2026-03-12 03:31:35] Inserting order_product: order_id=24, product_id=27, price=6.5
+[2026-03-12 03:31:35] Transaction committed successfully
+[2026-03-12 03:31:35] Order creation successful, returning response
+[2026-03-12 03:31:36] === New order request started ===
+[2026-03-12 03:31:36] Database connected successfully
+[2026-03-12 03:31:36] Request method: POST
+[2026-03-12 03:31:36] Processing POST request
+[2026-03-12 03:31:36] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 26
+            [1] => 27
+        )
+
+    [pickup_number] => 12
+)
+
+[2026-03-12 03:31:36] Pickup number: 12
+[2026-03-12 03:31:36] Checking product ID: 26
+[2026-03-12 03:31:36] Product 26 price: 7.50
+[2026-03-12 03:31:36] Checking product ID: 27
+[2026-03-12 03:31:36] Product 27 price: 6.50
+[2026-03-12 03:31:36] Total price calculated: 14
+[2026-03-12 03:31:36] Valid product IDs: 26, 27
+[2026-03-12 03:31:36] Transaction started
+[2026-03-12 03:31:36] Order inserted with ID: 25
+[2026-03-12 03:31:36] Inserting order_product: order_id=25, product_id=26, price=7.5
+[2026-03-12 03:31:36] Inserting order_product: order_id=25, product_id=27, price=6.5
+[2026-03-12 03:31:36] Transaction committed successfully
+[2026-03-12 03:31:36] Order creation successful, returning response
+[2026-03-12 03:31:36] === New order request started ===
+[2026-03-12 03:31:36] Database connected successfully
+[2026-03-12 03:31:36] Request method: POST
+[2026-03-12 03:31:36] Processing POST request
+[2026-03-12 03:31:36] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 26
+            [1] => 27
+        )
+
+    [pickup_number] => 12
+)
+
+[2026-03-12 03:31:36] Pickup number: 12
+[2026-03-12 03:31:36] Checking product ID: 26
+[2026-03-12 03:31:36] Product 26 price: 7.50
+[2026-03-12 03:31:36] Checking product ID: 27
+[2026-03-12 03:31:36] Product 27 price: 6.50
+[2026-03-12 03:31:36] Total price calculated: 14
+[2026-03-12 03:31:36] Valid product IDs: 26, 27
+[2026-03-12 03:31:36] Transaction started
+[2026-03-12 03:31:36] Order inserted with ID: 26
+[2026-03-12 03:31:36] Inserting order_product: order_id=26, product_id=26, price=7.5
+[2026-03-12 03:31:36] Inserting order_product: order_id=26, product_id=27, price=6.5
+[2026-03-12 03:31:36] Transaction committed successfully
+[2026-03-12 03:31:36] Order creation successful, returning response
+[2026-03-12 03:31:37] === New order request started ===
+[2026-03-12 03:31:37] Database connected successfully
+[2026-03-12 03:31:37] Request method: POST
+[2026-03-12 03:31:37] Processing POST request
+[2026-03-12 03:31:37] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 26
+            [1] => 27
+        )
+
+    [pickup_number] => 12
+)
+
+[2026-03-12 03:31:37] Pickup number: 12
+[2026-03-12 03:31:37] Checking product ID: 26
+[2026-03-12 03:31:37] Product 26 price: 7.50
+[2026-03-12 03:31:37] Checking product ID: 27
+[2026-03-12 03:31:37] Product 27 price: 6.50
+[2026-03-12 03:31:37] Total price calculated: 14
+[2026-03-12 03:31:37] Valid product IDs: 26, 27
+[2026-03-12 03:31:37] Transaction started
+[2026-03-12 03:31:37] Order inserted with ID: 27
+[2026-03-12 03:31:37] Inserting order_product: order_id=27, product_id=26, price=7.5
+[2026-03-12 03:31:37] Inserting order_product: order_id=27, product_id=27, price=6.5
+[2026-03-12 03:31:37] Transaction committed successfully
+[2026-03-12 03:31:37] Order creation successful, returning response
+[2026-03-12 03:31:38] === New order request started ===
+[2026-03-12 03:31:38] Database connected successfully
+[2026-03-12 03:31:38] Request method: POST
+[2026-03-12 03:31:38] Processing POST request
+[2026-03-12 03:31:38] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 26
+            [1] => 27
+        )
+
+    [pickup_number] => 12
+)
+
+[2026-03-12 03:31:38] Pickup number: 12
+[2026-03-12 03:31:38] Checking product ID: 26
+[2026-03-12 03:31:38] Product 26 price: 7.50
+[2026-03-12 03:31:38] Checking product ID: 27
+[2026-03-12 03:31:38] Product 27 price: 6.50
+[2026-03-12 03:31:38] Total price calculated: 14
+[2026-03-12 03:31:38] Valid product IDs: 26, 27
+[2026-03-12 03:31:38] Transaction started
+[2026-03-12 03:31:38] Order inserted with ID: 28
+[2026-03-12 03:31:38] Inserting order_product: order_id=28, product_id=26, price=7.5
+[2026-03-12 03:31:38] Inserting order_product: order_id=28, product_id=27, price=6.5
+[2026-03-12 03:31:38] Transaction committed successfully
+[2026-03-12 03:31:38] Order creation successful, returning response
+[2026-03-12 03:31:38] === New order request started ===
+[2026-03-12 03:31:38] Database connected successfully
+[2026-03-12 03:31:38] Request method: POST
+[2026-03-12 03:31:38] Processing POST request
+[2026-03-12 03:31:38] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 26
+            [1] => 27
+        )
+
+    [pickup_number] => 12
+)
+
+[2026-03-12 03:31:38] Pickup number: 12
+[2026-03-12 03:31:38] Checking product ID: 26
+[2026-03-12 03:31:38] Product 26 price: 7.50
+[2026-03-12 03:31:38] Checking product ID: 27
+[2026-03-12 03:31:38] Product 27 price: 6.50
+[2026-03-12 03:31:38] Total price calculated: 14
+[2026-03-12 03:31:38] Valid product IDs: 26, 27
+[2026-03-12 03:31:38] Transaction started
+[2026-03-12 03:31:38] Order inserted with ID: 29
+[2026-03-12 03:31:38] Inserting order_product: order_id=29, product_id=26, price=7.5
+[2026-03-12 03:31:38] Inserting order_product: order_id=29, product_id=27, price=6.5
+[2026-03-12 03:31:38] Transaction committed successfully
+[2026-03-12 03:31:38] Order creation successful, returning response
+[2026-03-12 03:31:39] === New order request started ===
+[2026-03-12 03:31:39] Database connected successfully
+[2026-03-12 03:31:39] Request method: POST
+[2026-03-12 03:31:39] Processing POST request
+[2026-03-12 03:31:39] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 26
+            [1] => 27
+        )
+
+    [pickup_number] => 12
+)
+
+[2026-03-12 03:31:39] Pickup number: 12
+[2026-03-12 03:31:39] Checking product ID: 26
+[2026-03-12 03:31:39] Product 26 price: 7.50
+[2026-03-12 03:31:39] Checking product ID: 27
+[2026-03-12 03:31:39] Product 27 price: 6.50
+[2026-03-12 03:31:39] Total price calculated: 14
+[2026-03-12 03:31:39] Valid product IDs: 26, 27
+[2026-03-12 03:31:39] Transaction started
+[2026-03-12 03:31:39] Order inserted with ID: 30
+[2026-03-12 03:31:39] Inserting order_product: order_id=30, product_id=26, price=7.5
+[2026-03-12 03:31:39] Inserting order_product: order_id=30, product_id=27, price=6.5
+[2026-03-12 03:31:39] Transaction committed successfully
+[2026-03-12 03:31:39] Order creation successful, returning response
+[2026-03-12 03:31:40] === New order request started ===
+[2026-03-12 03:31:40] Database connected successfully
+[2026-03-12 03:31:40] Request method: POST
+[2026-03-12 03:31:40] Processing POST request
+[2026-03-12 03:31:40] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 26
+            [1] => 27
+        )
+
+    [pickup_number] => 12
+)
+
+[2026-03-12 03:31:40] Pickup number: 12
+[2026-03-12 03:31:40] Checking product ID: 26
+[2026-03-12 03:31:40] Product 26 price: 7.50
+[2026-03-12 03:31:40] Checking product ID: 27
+[2026-03-12 03:31:40] Product 27 price: 6.50
+[2026-03-12 03:31:40] Total price calculated: 14
+[2026-03-12 03:31:40] Valid product IDs: 26, 27
+[2026-03-12 03:31:40] Transaction started
+[2026-03-12 03:31:40] Order inserted with ID: 31
+[2026-03-12 03:31:40] Inserting order_product: order_id=31, product_id=26, price=7.5
+[2026-03-12 03:31:40] Inserting order_product: order_id=31, product_id=27, price=6.5
+[2026-03-12 03:31:40] Transaction committed successfully
+[2026-03-12 03:31:40] Order creation successful, returning response
+[2026-03-12 03:31:41] === New order request started ===
+[2026-03-12 03:31:41] Database connected successfully
+[2026-03-12 03:31:41] Request method: POST
+[2026-03-12 03:31:41] Processing POST request
+[2026-03-12 03:31:41] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 26
+            [1] => 27
+        )
+
+    [pickup_number] => 12
+)
+
+[2026-03-12 03:31:41] Pickup number: 12
+[2026-03-12 03:31:41] Checking product ID: 26
+[2026-03-12 03:31:41] Product 26 price: 7.50
+[2026-03-12 03:31:41] Checking product ID: 27
+[2026-03-12 03:31:41] Product 27 price: 6.50
+[2026-03-12 03:31:41] Total price calculated: 14
+[2026-03-12 03:31:41] Valid product IDs: 26, 27
+[2026-03-12 03:31:41] Transaction started
+[2026-03-12 03:31:41] Order inserted with ID: 32
+[2026-03-12 03:31:41] Inserting order_product: order_id=32, product_id=26, price=7.5
+[2026-03-12 03:31:41] Inserting order_product: order_id=32, product_id=27, price=6.5
+[2026-03-12 03:31:41] Transaction committed successfully
+[2026-03-12 03:31:41] Order creation successful, returning response
+[2026-03-12 03:36:37] === New order request started ===
+[2026-03-12 03:36:37] Database connected successfully
+[2026-03-12 03:36:37] Request method: POST
+[2026-03-12 03:36:37] Processing POST request
+[2026-03-12 03:36:37] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 29
+            [1] => 29
+        )
+
+    [pickup_number] => 19
+)
+
+[2026-03-12 03:36:37] Pickup number: 19
+[2026-03-12 03:36:37] Checking product ID: 29
+[2026-03-12 03:36:37] Product 29 price: 5.50
+[2026-03-12 03:36:37] Checking product ID: 29
+[2026-03-12 03:36:37] Product 29 price: 5.50
+[2026-03-12 03:36:37] Total price calculated: 11
+[2026-03-12 03:36:37] Valid product IDs: 29, 29
+[2026-03-12 03:36:37] Transaction started
+[2026-03-12 03:36:37] Order inserted with ID: 33
+[2026-03-12 03:36:37] Inserting order_product: order_id=33, product_id=29, price=5.5
+[2026-03-12 03:36:37] Inserting order_product: order_id=33, product_id=29, price=5.5
+[2026-03-12 03:36:37] Transaction rolled back due to PDO error
+[2026-03-12 03:36:37] PDO Error: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '33-29' for key 'PRIMARY'
+[2026-03-12 03:36:58] === New order request started ===
+[2026-03-12 03:36:58] Database connected successfully
+[2026-03-12 03:36:58] Request method: POST
+[2026-03-12 03:36:58] Processing POST request
+[2026-03-12 03:36:58] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 32
+        )
+
+    [pickup_number] => 72
+)
+
+[2026-03-12 03:36:58] Pickup number: 72
+[2026-03-12 03:36:58] Checking product ID: 32
+[2026-03-12 03:36:58] Product 32 price: 10.00
+[2026-03-12 03:36:58] Total price calculated: 10
+[2026-03-12 03:36:58] Valid product IDs: 32
+[2026-03-12 03:36:58] Transaction started
+[2026-03-12 03:36:58] Order inserted with ID: 34
+[2026-03-12 03:36:58] Inserting order_product: order_id=34, product_id=32, price=10
+[2026-03-12 03:36:58] Transaction committed successfully
+[2026-03-12 03:36:58] Order creation successful, returning response
+[2026-03-12 03:38:31] === New order request started ===
+[2026-03-12 03:38:31] Database connected successfully
+[2026-03-12 03:38:31] Request method: POST
+[2026-03-12 03:38:31] Processing POST request
+[2026-03-12 03:38:31] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 32
+        )
+
+    [pickup_number] => 19
+)
+
+[2026-03-12 03:38:31] Pickup number: 19
+[2026-03-12 03:38:31] Checking product ID: 32
+[2026-03-12 03:38:31] Product 32 price: 10.00
+[2026-03-12 03:38:31] Total price calculated: 10
+[2026-03-12 03:38:31] Valid product IDs: 32
+[2026-03-12 03:38:31] Transaction started
+[2026-03-12 03:38:31] Order inserted with ID: 35
+[2026-03-12 03:38:31] Inserting order_product: order_id=35, product_id=32, price=10
+[2026-03-12 03:38:31] Transaction committed successfully
+[2026-03-12 03:38:31] Order creation successful, returning response
+[2026-03-12 03:38:55] === New order request started ===
+[2026-03-12 03:38:55] Database connected successfully
+[2026-03-12 03:38:55] Request method: POST
+[2026-03-12 03:38:55] Processing POST request
+[2026-03-12 03:38:55] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 35
+        )
+
+    [pickup_number] => 91
+)
+
+[2026-03-12 03:38:55] Pickup number: 91
+[2026-03-12 03:38:55] Checking product ID: 35
+[2026-03-12 03:38:55] Product 35 price: 9.00
+[2026-03-12 03:38:55] Total price calculated: 9
+[2026-03-12 03:38:55] Valid product IDs: 35
+[2026-03-12 03:38:55] Transaction started
+[2026-03-12 03:38:55] Order inserted with ID: 36
+[2026-03-12 03:38:55] Inserting order_product: order_id=36, product_id=35, price=9
+[2026-03-12 03:38:55] Transaction committed successfully
+[2026-03-12 03:38:55] Order creation successful, returning response
+[2026-03-12 03:44:51] === New order request started ===
+[2026-03-12 03:44:51] Database connected successfully
+[2026-03-12 03:44:51] Request method: POST
+[2026-03-12 03:44:51] Processing POST request
+[2026-03-12 03:44:51] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 33
+            [1] => 34
+            [2] => 42
+            [3] => 37
+        )
+
+    [pickup_number] => 24
+)
+
+[2026-03-12 03:44:51] Pickup number: 24
+[2026-03-12 03:44:51] Grouped quantities: Array
+(
+    [33] => 1
+    [34] => 1
+    [42] => 1
+    [37] => 1
+)
+
+[2026-03-12 03:44:51] Checking product ID: 33 (quantity: 1)
+[2026-03-12 03:44:51] Checking product ID: 34 (quantity: 1)
+[2026-03-12 03:44:51] Checking product ID: 42 (quantity: 1)
+[2026-03-12 03:44:51] Checking product ID: 37 (quantity: 1)
+[2026-03-12 03:44:51] Total price calculated: 25
+[2026-03-12 03:44:51] Transaction started
+[2026-03-12 03:44:51] Order inserted with ID: 37
+[2026-03-12 03:44:51] Inserting order_product: order_id=37, product_id=33, price=11 (instance 1 of 1)
+[2026-03-12 03:44:51] Inserting order_product: order_id=37, product_id=34, price=8.5 (instance 1 of 1)
+[2026-03-12 03:44:51] Inserting order_product: order_id=37, product_id=42, price=1 (instance 1 of 1)
+[2026-03-12 03:44:51] Inserting order_product: order_id=37, product_id=37, price=4.5 (instance 1 of 1)
+[2026-03-12 03:44:51] Transaction committed successfully
+[2026-03-12 03:44:51] Order creation successful, returning response
+[2026-03-12 03:49:05] === New order request started ===
+[2026-03-12 03:49:05] Database connected successfully
+[2026-03-12 03:49:05] Request method: POST
+[2026-03-12 03:49:05] Processing POST request
+[2026-03-12 03:49:05] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 32
+        )
+
+    [pickup_number] => 68
+)
+
+[2026-03-12 03:49:05] Pickup number: 68
+[2026-03-12 03:49:05] Grouped quantities: Array
+(
+    [32] => 1
+)
+
+[2026-03-12 03:49:05] Checking product ID: 32 (quantity: 1)
+[2026-03-12 03:49:05] Total price calculated: 10
+[2026-03-12 03:49:05] Transaction started
+[2026-03-12 03:49:05] Order inserted with ID: 38
+[2026-03-12 03:49:05] Inserting order_product: order_id=38, product_id=32, price=10 (instance 1 of 1)
+[2026-03-12 03:49:05] Transaction committed successfully
+[2026-03-12 03:49:05] Order creation successful, returning response
+[2026-03-12 03:49:16] === New order request started ===
+[2026-03-12 03:49:16] Database connected successfully
+[2026-03-12 03:49:16] Request method: POST
+[2026-03-12 03:49:16] Processing POST request
+[2026-03-12 03:49:16] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 39
+        )
+
+    [pickup_number] => 57
+)
+
+[2026-03-12 03:49:16] Pickup number: 57
+[2026-03-12 03:49:16] Grouped quantities: Array
+(
+    [39] => 1
+)
+
+[2026-03-12 03:49:16] Checking product ID: 39 (quantity: 1)
+[2026-03-12 03:49:16] Total price calculated: 5
+[2026-03-12 03:49:16] Transaction started
+[2026-03-12 03:49:16] Order inserted with ID: 39
+[2026-03-12 03:49:16] Inserting order_product: order_id=39, product_id=39, price=5 (instance 1 of 1)
+[2026-03-12 03:49:16] Transaction committed successfully
+[2026-03-12 03:49:16] Order creation successful, returning response
+[2026-03-12 03:50:33] === New order request started ===
+[2026-03-12 03:50:33] Database connected successfully
+[2026-03-12 03:50:33] Request method: POST
+[2026-03-12 03:50:33] Processing POST request
+[2026-03-12 03:50:33] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 32
+        )
+
+    [pickup_number] => 12
+)
+
+[2026-03-12 03:50:33] Pickup number: 12
+[2026-03-12 03:50:33] Grouped quantities: Array
+(
+    [32] => 1
+)
+
+[2026-03-12 03:50:33] Checking product ID: 32 (quantity: 1)
+[2026-03-12 03:50:33] Total price calculated: 10
+[2026-03-12 03:50:33] Transaction started
+[2026-03-12 03:50:33] Order inserted with ID: 40
+[2026-03-12 03:50:33] Inserting order_product: order_id=40, product_id=32, price=10 (instance 1 of 1)
+[2026-03-12 03:50:33] Transaction committed successfully
+[2026-03-12 03:50:33] Order creation successful, returning response
+[2026-03-12 03:51:32] === New order request started ===
+[2026-03-12 03:51:32] Database connected successfully
+[2026-03-12 03:51:32] Request method: POST
+[2026-03-12 03:51:32] Processing POST request
+[2026-03-12 03:51:32] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 30
+        )
+
+    [pickup_number] => 66
+)
+
+[2026-03-12 03:51:32] Pickup number: 66
+[2026-03-12 03:51:32] Grouped quantities: Array
+(
+    [30] => 1
+)
+
+[2026-03-12 03:51:32] Checking product ID: 30 (quantity: 1)
+[2026-03-12 03:51:32] Total price calculated: 10.5
+[2026-03-12 03:51:32] Transaction started
+[2026-03-12 03:51:32] Order inserted with ID: 41
+[2026-03-12 03:51:32] Inserting order_product: order_id=41, product_id=30, price=10.5 (instance 1 of 1)
+[2026-03-12 03:51:32] Transaction committed successfully
+[2026-03-12 03:51:32] Order creation successful, returning response
+[2026-03-12 04:01:07] === New order request started ===
+[2026-03-12 04:01:07] Database connected successfully
+[2026-03-12 04:01:07] Request method: POST
+[2026-03-12 04:01:07] Processing POST request
+[2026-03-12 04:01:07] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 26
+            [1] => 27
+        )
+
+    [pickup_number] => 12
+)
+
+[2026-03-12 04:01:07] Pickup number: 12
+[2026-03-12 04:01:07] Grouped quantities: Array
+(
+    [26] => 1
+    [27] => 1
+)
+
+[2026-03-12 04:01:07] Checking product ID: 26 (quantity: 1)
+[2026-03-12 04:01:07] Checking product ID: 27 (quantity: 1)
+[2026-03-12 04:01:07] Total price calculated: 14
+[2026-03-12 04:01:07] Transaction started
+[2026-03-12 04:01:07] Order inserted with ID: 42
+[2026-03-12 04:01:07] Inserting order_product: order_id=42, product_id=26, price=7.5 (instance 1 of 1)
+[2026-03-12 04:01:07] Inserting order_product: order_id=42, product_id=27, price=6.5 (instance 1 of 1)
+[2026-03-12 04:01:07] Transaction committed successfully
+[2026-03-12 04:01:07] Order creation successful, returning response
+[2026-03-12 04:01:09] === New order request started ===
+[2026-03-12 04:01:09] Database connected successfully
+[2026-03-12 04:01:09] Request method: POST
+[2026-03-12 04:01:09] Processing POST request
+[2026-03-12 04:01:09] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 26
+            [1] => 27
+        )
+
+    [pickup_number] => 12
+)
+
+[2026-03-12 04:01:09] Pickup number: 12
+[2026-03-12 04:01:09] Grouped quantities: Array
+(
+    [26] => 1
+    [27] => 1
+)
+
+[2026-03-12 04:01:09] Checking product ID: 26 (quantity: 1)
+[2026-03-12 04:01:09] Checking product ID: 27 (quantity: 1)
+[2026-03-12 04:01:09] Total price calculated: 14
+[2026-03-12 04:01:09] Transaction started
+[2026-03-12 04:01:09] Order inserted with ID: 43
+[2026-03-12 04:01:09] Inserting order_product: order_id=43, product_id=26, price=7.5 (instance 1 of 1)
+[2026-03-12 04:01:09] Inserting order_product: order_id=43, product_id=27, price=6.5 (instance 1 of 1)
+[2026-03-12 04:01:09] Transaction committed successfully
+[2026-03-12 04:01:09] Order creation successful, returning response
+[2026-03-12 04:04:09] === New order request started ===
+[2026-03-12 04:04:09] Database connected successfully
+[2026-03-12 04:04:09] Request method: POST
+[2026-03-12 04:04:09] Processing POST request
+[2026-03-12 04:04:09] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 26
+            [1] => 27
+        )
+
+    [pickup_number] => 12
+)
+
+[2026-03-12 04:04:09] Pickup number: 12
+[2026-03-12 04:04:09] Grouped quantities: Array
+(
+    [26] => 1
+    [27] => 1
+)
+
+[2026-03-12 04:04:09] Checking product ID: 26 (quantity: 1)
+[2026-03-12 04:04:09] Checking product ID: 27 (quantity: 1)
+[2026-03-12 04:04:09] Total price calculated: 14
+[2026-03-12 04:04:09] Transaction started
+[2026-03-12 04:04:10] Order inserted with ID: 44
+[2026-03-12 04:04:10] Inserting order_product: order_id=44, product_id=26, price=7.5 (instance 1 of 1)
+[2026-03-12 04:04:10] Inserting order_product: order_id=44, product_id=27, price=6.5 (instance 1 of 1)
+[2026-03-12 04:04:10] Transaction committed successfully
+[2026-03-12 04:04:10] Order creation successful, returning response
+[2026-03-12 04:04:17] === New order request started ===
+[2026-03-12 04:04:17] Database connected successfully
+[2026-03-12 04:04:17] Request method: POST
+[2026-03-12 04:04:17] Processing POST request
+[2026-03-12 04:04:17] Received data: Array
+(
+    [products] => Array
+        (
+            [0] => 31
+        )
+
+    [pickup_number] => 13
+)
+
+[2026-03-12 04:04:17] Pickup number: 13
+[2026-03-12 04:04:17] Grouped quantities: Array
+(
+    [31] => 1
+)
+
+[2026-03-12 04:04:17] Checking product ID: 31 (quantity: 1)
+[2026-03-12 04:04:17] Total price calculated: 9.5
+[2026-03-12 04:04:17] Transaction started
+[2026-03-12 04:04:17] Order inserted with ID: 45
+[2026-03-12 04:04:17] Inserting order_product: order_id=45, product_id=31, price=9.5 (instance 1 of 1)
+[2026-03-12 04:04:17] Transaction committed successfully
+[2026-03-12 04:04:17] Order creation successful, returning response
