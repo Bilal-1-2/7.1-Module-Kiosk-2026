@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const translations = {
     nl: {
       orderHere: "BESTELLEN",
-      eatIn: "Eat-in",
+      eatIn: "Hier eten",
       takeOut: "Meenemen",
       cancel: "Annuleren",
       add: "Toevoegen",
@@ -44,6 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
       choosePayment: "Kies betaalmethode",
       processing: "Betaling wordt verwerkt...",
       chooseLanguage: "Taal",
+      allCategory: "Alles",
     },
     en: {
       orderHere: "ORDER NOW",
@@ -52,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
       cancel: "Cancel",
       add: "Add",
       addedToOrder: "added to your order!",
-      reviewOrder: "Review Order",
+      reviewOrder: "View Order",
       total: "Total",
       pay: "Pay",
       thankYou: "Thank you for your order!",
@@ -65,12 +66,16 @@ document.addEventListener("DOMContentLoaded", function () {
       choosePayment: "Choose payment method",
       processing: "Payment is being processed...",
       chooseLanguage: "Language",
+      allCategory: "All",
     },
   };
 
-  let currentLang = "nl";
+  let currentLang = "en";
   let cart = [];
   let currentCategory = "all";
+
+  // Initialize language to English on page load
+  setLanguage("en");
 
   // Fetch products from API - works locally and on live domain
   const apiBaseUrl =
@@ -95,11 +100,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
 
-      // Add "All" category button first
+      // Add translated "All" category button first
       const allCategories = [
         {
           id: "all",
-          name: "Alles",
+          name: translations[currentLang].allCategory,
           filename:
             "assets/images/logos/logo_big_happy_herbivore_transparent.png",
         },
@@ -174,7 +179,7 @@ document.addEventListener("DOMContentLoaded", function () {
   reviewPopup.className = "detail-popup review-popup";
   reviewPopup.id = "reviewPopup";
   reviewPopup.innerHTML = `
-    <h2 class="detail-title" id="reviewTitle">Bestelling Bekijken</h2>
+    <h2 class="detail-title" id="reviewTitle"> View order</h2>
     <div class="cart-items" id="cartItems"></div>
     <div class="cart-total">
       <span id="cartTotalText">Totaal:</span>
@@ -246,7 +251,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const orderReviewBtn = document.createElement("button");
   orderReviewBtn.className = "order-review-btn";
   orderReviewBtn.id = "orderReviewBtn";
-  orderReviewBtn.innerHTML = `<span id="reviewBtnText">Bestelling Bekijken</span><span id="cartCount" class="cart-count">0</span>`;
+  orderReviewBtn.innerHTML = `<span id="reviewBtnText">View order</span><span id="cartCount" class="cart-count">0</span>`;
   orderReviewBtn.onclick = showReviewOrder;
 
   // Append all elements to body
@@ -275,14 +280,14 @@ let currentProductId = 0;
 let currentProductName = "";
 let currentProductPrice = 0;
 let currentProductImage = "";
-let currentLang = "nl";
+let currentLang = "en";
 let cart = [];
 
 // Language translations - accessible globally
 const translations = {
   nl: {
     orderHere: "BESTELLEN",
-    eatIn: "Eat-in",
+    eatIn: "Hier eten",
     takeOut: "Meenemen",
     cancel: "Annuleren",
     add: "Toevoegen",
@@ -299,6 +304,7 @@ const translations = {
     noDescription: "Geen beschrijving beschikbaar",
     choosePayment: "Kies betaalmethode",
     processing: "Betaling wordt verwerkt...",
+    allCategory: "Alles",
   },
   en: {
     orderHere: "ORDER NOW",
@@ -319,6 +325,7 @@ const translations = {
     noDescription: "No description available",
     choosePayment: "Choose payment method",
     processing: "Payment is being processed...",
+    allCategory: "All",
   },
 };
 
@@ -340,8 +347,10 @@ function setLanguage(lang) {
   if (eatInBtn) eatInBtn.textContent = t.eatIn;
   if (takeOutBtn) takeOutBtn.textContent = t.takeOut;
 
-  // Update other UI elements
-  window.updateLangText();
+  // Update review button text
+  if (document.getElementById("reviewBtnText")) {
+    document.getElementById("reviewBtnText").textContent = t.reviewOrder;
+  }
 }
 
 // Helper function to hide order review button
@@ -362,7 +371,7 @@ function filterCategory(categoryId, element) {
   element.classList.add("active");
 
   const products_container = document.getElementById("products-container");
-  products_container.innerHTML = "";
+  const products_wrapper = document.getElementById("products-wrapper");
   const products = window.allProducts || [];
 
   const filteredProducts =
@@ -375,7 +384,11 @@ function filterCategory(categoryId, element) {
     categoryName = filteredProducts[0].category_name;
   }
 
-  products_container.innerHTML += `<h2 class="category-title">${categoryName}</h2>`;
+  // Clear wrapper and add title first, then container
+  products_wrapper.innerHTML = `<h2 class="category-title">${categoryName}</h2><div id="products-container"></div>`;
+
+  // Get the new products-container reference
+  const newProductsContainer = document.getElementById("products-container");
 
   filteredProducts.forEach((product) => {
     const html = `<a href='#' onclick="showProductDetail('${product.id}', '${product.name}', '${product.description}', '${product.price}', '${product.filename}', '${product.kcal || 0}')">
@@ -385,16 +398,16 @@ function filterCategory(categoryId, element) {
         <p class="product-price">€${product.price}</p>
       </div>
     </a>`;
-    products_container.innerHTML += html;
+    newProductsContainer.innerHTML += html;
   });
 }
 
 // Toggle language
 function toggleLanguage() {
-  currentLang = currentLang === "nl" ? "en" : "nl";
-  window.updateLangText();
+  currentLang = currentLang === "nl" ? "en" : "en";
   const t = translations[currentLang];
 
+  // Update all translation elements
   if (document.getElementById("reviewTitle"))
     document.getElementById("reviewTitle").textContent = t.reviewOrder;
   if (document.getElementById("cartTotalText"))
@@ -418,6 +431,8 @@ function toggleLanguage() {
     document.getElementById("reviewPayBtn").textContent = t.pay;
   if (document.getElementById("paymentCancelBtn"))
     document.getElementById("paymentCancelBtn").textContent = t.cancel;
+  if (document.getElementById("reviewBtnText"))
+    document.getElementById("reviewBtnText").textContent = t.reviewOrder;
 }
 
 // Render products with VG/V badges
