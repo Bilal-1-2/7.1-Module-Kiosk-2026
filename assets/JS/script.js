@@ -978,12 +978,12 @@ function processPayment(method, event) {
           `Order #${actualOrderId} displayed as #${paddedDisplayNumber}`,
         );
 
-        // Store order data for receipt
+        // Store order data for receipt - ensure total is a number
         lastOrder = {
           order_id: actualOrderId,
           display_number: displayNumber,
           pickup_number: data.data.pickup_number,
-          total: data.data.price_total,
+          total: parseFloat(data.data.price_total) || 0, // Convert to number
           items: cart.map((item) => ({
             name: item.name,
             price: item.price,
@@ -1005,6 +1005,9 @@ function processPayment(method, event) {
         document.getElementById("newOrderBtn").textContent = t.newOrder;
         document.getElementById("thankYouOverlay").classList.add("active");
         document.getElementById("thankYouPopup").classList.add("active");
+
+        // Hide order review button on thank-you
+        hideOrderReviewButton();
 
         // Clear cart
         cart = [];
@@ -1047,6 +1050,12 @@ function printReceipt() {
   // Calculate display number for receipt
   const displayNumber = ((order.order_id - 1) % 99) + 1;
   const paddedDisplayNumber = displayNumber.toString().padStart(2, "0");
+
+  // Ensure total is a number
+  const totalAmount =
+    typeof order.total === "number"
+      ? order.total
+      : parseFloat(order.total) || 0;
 
   // Create receipt HTML
   const receiptContent = `
@@ -1158,7 +1167,7 @@ function printReceipt() {
 
         <div class="total">
             <span>${t.total}:</span>
-            <span>€${order.total ? order.total.toFixed(2) : "0.00"}</span>
+            <span>€${totalAmount.toFixed(2)}</span>
         </div>
 
         <div class="footer">
