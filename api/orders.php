@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-// Enable error reporting for debugging (remove in production)
+// Enable error reporting for debugging
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -42,8 +42,8 @@ if ($method === 'GET') {
                 sendError("Order not found", 404);
             }
 
-            // Get order products
-            $query = "SELECT op.product_id, op.price, p.name, p.description, i.filename
+            // Get order products with quantities
+            $query = "SELECT op.product_id, op.price, op.quantity, p.name, p.description, i.filename
                      FROM order_product op
                      JOIN products p ON op.product_id = p.product_id
                      LEFT JOIN images i ON p.image_id = i.image_id
@@ -55,7 +55,7 @@ if ($method === 'GET') {
             $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             $order['products'] = $products;
-            $order['product_count'] = count($products);
+            $order['product_count'] = array_sum(array_column($products, 'quantity'));
 
             sendResponse($order, 200, "Order retrieved successfully");
         } catch (PDOException $e) {
@@ -64,7 +64,7 @@ if ($method === 'GET') {
     } else {
         // Get all orders
         try {
-            $query = "SELECT o.*, os.description as status_description, COUNT(op.product_id) as product_count
+            $query = "SELECT o.*, os.description as status_description, SUM(op.quantity) as product_count
                      FROM orders o
                      LEFT JOIN order_status os ON o.order_status_id = os.order_status_id
                      LEFT JOIN order_product op ON o.order_id = op.order_id
@@ -95,22 +95,22 @@ if ($method === 'GET') {
 
         $pickup_number = sanitizeInput($data['pickup_number']);
 
-        // Calculate total price and group products
+        // Calculate total price
         $total_price = 0;
-        $product_quantities = [];
-        $product_prices = [];
+        $order_items = [];
 
-        // Count quantities of each product
-        foreach ($data['products'] as $product_id) {
-            $product_id = intval($product_id);
-            if (!isset($product_quantities[$product_id])) {
-                $product_quantities[$product_id] = 0;
+        // Process each product with its quantity
+        foreach ($data['products'] as $product_item) {
+            // Handle both formats
+            if (is_array($product_item) && isset($product_item['product_id'])) {
+                $product_id = intval($product_item['product_id']);
+                $quantity = isset($product_item['quantity']) ? intval($product_item['quantity']) : 1;
+            } else {
+                $product_id = intval($product_item);
+                $quantity = 1;
             }
-            $product_quantities[$product_id]++;
-        }
 
-        // Validate each product and calculate total
-        foreach ($product_quantities as $product_id => $quantity) {
+            // Get product price
             $query = "SELECT price FROM products WHERE product_id = :id";
             $stmt = $db->prepare($query);
             $stmt->bindParam(':id', $product_id, PDO::PARAM_INT);
@@ -121,8 +121,17 @@ if ($method === 'GET') {
                 sendError("Product with ID " . $product_id . " not found", 404);
             }
 
-            $total_price += floatval($product['price']) * $quantity;
-            $product_prices[$product_id] = floatval($product['price']);
+            $price = floatval($product['price']);
+            $total_price += $price * $quantity;
+
+            // Store for insertion - combine quantities for same product
+            if (!isset($order_items[$product_id])) {
+                $order_items[$product_id] = [
+                    'price' => $price,
+                    'quantity' => 0
+                ];
+            }
+            $order_items[$product_id]['quantity'] += $quantity;
         }
 
         // Start transaction
@@ -144,20 +153,17 @@ if ($method === 'GET') {
 
         $order_id = $db->lastInsertId();
 
-        // Insert order products
-        foreach ($product_quantities as $product_id => $quantity) {
-            $price = $product_prices[$product_id];
+        // Insert order products - ONE ROW PER PRODUCT with quantity
+        foreach ($order_items as $product_id => $details) {
+            $query = "INSERT INTO order_product (order_id, product_id, price, quantity)
+                     VALUES (:order_id, :product_id, :price, :quantity)";
 
-            for ($i = 0; $i < $quantity; $i++) {
-                $query = "INSERT INTO order_product (order_id, product_id, price)
-                         VALUES (:order_id, :product_id, :price)";
-
-                $stmt = $db->prepare($query);
-                $stmt->bindParam(':order_id', $order_id, PDO::PARAM_INT);
-                $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
-                $stmt->bindParam(':price', $price);
-                $stmt->execute();
-            }
+            $stmt = $db->prepare($query);
+            $stmt->bindParam(':order_id', $order_id, PDO::PARAM_INT);
+            $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
+            $stmt->bindParam(':price', $details['price']);
+            $stmt->bindParam(':quantity', $details['quantity'], PDO::PARAM_INT);
+            $stmt->execute();
         }
 
         // Commit transaction
@@ -174,8 +180,8 @@ if ($method === 'GET') {
         $stmt->execute();
         $order = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Get order products
-        $query = "SELECT op.product_id, op.price, p.name, p.description, i.filename
+        // Get order products with quantities
+        $query = "SELECT op.product_id, op.price, op.quantity, p.name, p.description, i.filename
                  FROM order_product op
                  JOIN products p ON op.product_id = p.product_id
                  LEFT JOIN images i ON p.image_id = i.image_id
@@ -187,7 +193,7 @@ if ($method === 'GET') {
         $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $order['products'] = $products;
-        $order['product_count'] = count($products);
+        $order['product_count'] = array_sum(array_column($products, 'quantity'));
 
         sendResponse($order, 201, "Order created successfully");
 

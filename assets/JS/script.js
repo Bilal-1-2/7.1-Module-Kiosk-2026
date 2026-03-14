@@ -269,7 +269,7 @@ function createPopups() {
         e.preventDefault();
         e.stopPropagation();
         processPayment("card", e); // Pass the event
-         return false;
+        return false;
       });
 
     document
@@ -278,7 +278,7 @@ function createPopups() {
         e.preventDefault();
         e.stopPropagation();
         processPayment("apple", e); // Pass the event
-         return false;
+        return false;
       });
 
     document
@@ -287,7 +287,7 @@ function createPopups() {
         e.preventDefault();
         e.stopPropagation();
         processPayment("google", e); // Pass the event
-         return false;
+        return false;
       });
 
     document
@@ -296,7 +296,7 @@ function createPopups() {
         e.preventDefault();
         e.stopPropagation();
         closePayment();
-         return false;
+        return false;
       });
   }, 100);
 
@@ -904,8 +904,8 @@ function processPayment(method, event) {
   document.getElementById("processingOverlay").classList.add("active");
   document.getElementById("processingPopup").classList.add("active");
 
-  // IMPORTANT FIX: Group products by ID to avoid duplicates
-  const productMap = new Map();
+  // FIX: Send products with quantities instead of duplicate IDs
+  const productsWithQuantity = [];
 
   cart.forEach((item) => {
     console.log("Cart item:", item);
@@ -918,43 +918,24 @@ function processPayment(method, event) {
       return;
     }
 
-    // Group by product_id - send quantity instead of duplicate entries
-    if (productMap.has(item.product_id)) {
-      // If product already exists, increase quantity
-      productMap.set(
-        item.product_id,
-        productMap.get(item.product_id) + item.quantity,
-      );
-    } else {
-      // Otherwise add with quantity
-      productMap.set(item.product_id, item.quantity);
-    }
+    // Add the product with its quantity
+    productsWithQuantity.push({
+      product_id: item.product_id,
+      quantity: item.quantity,
+    });
   });
 
-  // Convert the map to an array of product IDs with duplicates removed
-  // The backend will need to handle quantities differently
-  const productIds = [];
-  productMap.forEach((quantity, productId) => {
-    // For now, we still send individual entries until we update the backend
-    // But we'll add a note in the console
-    console.log(`Product ${productId} ordered ${quantity} times`);
-    for (let i = 0; i < quantity; i++) {
-      productIds.push(productId);
-    }
-  });
-
-  console.log("Product IDs to send (with duplicates):", productIds);
+  console.log("Products with quantity:", productsWithQuantity);
 
   // Generate pickup number (2 digits)
   const pickupNumber = Math.floor(Math.random() * 90 + 10).toString();
 
-  // Prepare order data
+  // Prepare order data with the new format
   const orderData = {
-    products: productIds,
+    products: productsWithQuantity, // Now sending objects with product_id and quantity
     pickup_number: pickupNumber,
   };
 
-  // Use the globally set apiBaseUrl
   const url = apiBaseUrl + "/api/orders.php";
   console.log("Sending to URL:", url);
   console.log("Order data:", orderData);
@@ -986,9 +967,21 @@ function processPayment(method, event) {
       document.getElementById("processingPopup").classList.remove("active");
 
       if (data.success) {
+        // Get the actual database ID
+        const actualOrderId = data.data.order_id;
+
+        // Calculate cyclic number (1-99)
+        const displayNumber = ((actualOrderId - 1) % 99) + 1;
+        const paddedDisplayNumber = displayNumber.toString().padStart(2, "0");
+
+        console.log(
+          `Order #${actualOrderId} displayed as #${paddedDisplayNumber}`,
+        );
+
         // Store order data for receipt
         lastOrder = {
-          order_id: data.data.order_id,
+          order_id: actualOrderId,
+          display_number: displayNumber,
           pickup_number: data.data.pickup_number,
           total: data.data.price_total,
           items: cart.map((item) => ({
@@ -999,16 +992,14 @@ function processPayment(method, event) {
           })),
         };
 
-        console.log("Order successful:", lastOrder);
-
-        // Show thank you popup with order number
+        // Show thank you popup with the cyclic display number
         document.getElementById("orderNumber").textContent =
-          data.data.pickup_number || data.data.order_id;
+          paddedDisplayNumber;
         document.getElementById("thankYouTitle").textContent = t.thankYou;
         document.getElementById("orderNumberText").innerHTML =
           t.orderNumber +
           ': <span id="orderNumber">' +
-          (data.data.pickup_number || data.data.order_id) +
+          paddedDisplayNumber +
           "</span>";
 
         document.getElementById("newOrderBtn").textContent = t.newOrder;
@@ -1052,6 +1043,10 @@ function printReceipt() {
 
   const t = translations[currentLang];
   const order = lastOrder;
+
+  // Calculate display number for receipt
+  const displayNumber = ((order.order_id - 1) % 99) + 1;
+  const paddedDisplayNumber = displayNumber.toString().padStart(2, "0");
 
   // Create receipt HTML
   const receiptContent = `
@@ -1138,7 +1133,7 @@ function printReceipt() {
         </div>
         
         <div class="order-info">
-            <div class="order-number">#${order.pickup_number || order.order_id}</div>
+            <div class="order-number">#${paddedDisplayNumber}</div>
             <div class="datetime">${new Date().toLocaleString()}</div>
             <div>Order Type: ${orderType === "eat-in" ? "Eat-in" : "Take-out"}</div>
         </div>
