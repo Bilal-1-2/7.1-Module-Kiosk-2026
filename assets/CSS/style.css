@@ -17,7 +17,6 @@ a:focus {
 .payment-btn,
 .detail-cancel-btn,
 .detail-add-btn {
-
   pointer-events: auto;
 }
 
@@ -31,16 +30,17 @@ body {
   margin: 0;
   padding-top: 12vh;
   overflow-x: hidden;
-  background-image: url("../images/d9e083c69c0ad64cc2a1a03dec65cbfe.jpg");
-  background-size: cover;
+  /* background-image: url("../images/d9e083c69c0ad64cc2a1a03dec65cbfe.jpg"); */
+  /* background-size: cover;
   background-position: center center;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; */
+  background-color: #deff78;
 }
 
 header {
   height: 6vh;
-  border: 2px solid black;
-  background-color: white;
+  border: 2px solid #053631;
+  background-color: #ffb181;
   display: flex;
   align-items: center;
   padding-left: 3vw;
@@ -54,7 +54,7 @@ header img {
 main {
   display: flex;
   height: 82vh;
-  background-color: #f7f7f7;
+  background-color: #deff78;
 }
 
 /* Left sidebar - Categories */
@@ -63,17 +63,17 @@ main {
   width: 280px;
   min-width: 280px;
   overflow-y: auto;
-  border-right: 3px solid #ccc;
-  background-color: #f9f9f9;
+  border-right: 3px solid #053631;
+  background-color: #ffb181;
 }
 
 .scroll-item {
   min-height: 180px;
   height: auto;
   width: 220px;
-  background-color: #ffffff;
+  background-color: #ffb181;
   margin: 40px auto;
-  border: 2px solid #000000;
+  border: 2px solid #ff7520;
   border-radius: 60px;
   display: flex;
   flex-direction: column;
@@ -91,7 +91,7 @@ main {
 .scroll-item p {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #000000;
+  color: white;
   margin: 10px 0 0 0;
   text-align: center;
 }
@@ -100,7 +100,7 @@ main {
 #products-wrapper {
   width: 100%;
   overflow-y: auto;
-  background-color: #f7f7f7;
+  background-color: #deff78;
 }
 
 /* Products grid */
@@ -118,10 +118,10 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 2px solid #333;
+  border: 2px solid #053631;
   border-radius: 12px;
   padding: 1rem;
-  background-color: #ffffff;
+  background-color: #ffb181;
   border-radius: 30%;
 }
 
@@ -135,7 +135,7 @@ main {
 .product-name {
   font-size: 1.2rem;
   font-weight: bold;
-  color: #000;
+  color: white;
   margin: 0;
   text-align: center;
 }
@@ -143,7 +143,7 @@ main {
 .product-price {
   font-size: 1rem;
   font-weight: lighter;
-  color: #444444;
+  color: white;
   margin: 0.1rem;
   text-align: center;
 }
@@ -156,12 +156,12 @@ main {
 
 .scroll-container::-webkit-scrollbar-track,
 #products-wrapper::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #deff78;
 }
 
 .scroll-container::-webkit-scrollbar-thumb,
 #products-wrapper::-webkit-scrollbar-thumb {
-  background: #888;
+  background: #ffb181;
   border-radius: 6px;
 }
 
@@ -191,5 +191,5 @@ main {
 .processing-title {
   font-size: 2.5rem;
   font-weight: bold;
-  color: #053631;
+  color: white;
 }

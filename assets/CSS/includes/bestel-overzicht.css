@@ -59,12 +59,12 @@
   width: 100%;
   font-size: 2.5rem;
   font-weight: bold;
-  color: #053631;
+  color: white;
   text-align: center;
   margin: 0 0 20px 0;
   padding: 20px 0;
   border-bottom: 3px solid #8cd003;
-  background-color: #f7f7f7;
+  background-color: #ffb181;
   clear: both;
 }
 
@@ -92,8 +92,8 @@
   flex-direction: row;
   align-items: center;
   padding: 15px;
-  border: 2px solid #ddd;
-  background: white;
+  border: 2px solid #053631;
+  background: #ffb181;
   margin-bottom: 12px;
   border-radius: 12px;
   box-sizing: border-box;
@@ -119,7 +119,7 @@
 .cart-item-name {
   font-weight: bold;
   font-size: 1.3rem;
-  color: #000;
+  color: white;
   margin: 0 0 8px 0;
 }
 
@@ -140,12 +140,12 @@
 }
 
 .qty-btn.minus {
-  background-color: #f44336;
+  background-color: #ff7520;
   color: white;
 }
 
 .qty-btn.plus {
-  background-color: #4caf50;
+  background-color: #8cd003;
   color: white;
 }
 
@@ -171,7 +171,7 @@
 }
 
 .cart-remove-btn {
-  background-color: #f44336;
+  background-color: #ff7520;
   color: white;
   border: none;
   padding: 8px 15px;
@@ -187,15 +187,15 @@
   padding: 20px;
   font-size: 1.8rem;
   font-weight: bold;
-  border-top: 3px solid #333;
-  background: white;
+  border-top: 3px solid #053631;
+  background: #ffb181;
 }
 
 .empty-cart {
   text-align: center;
   padding: 50px;
   font-size: 1.5rem;
-  color: #666;
+  color: #053631;
 }
 
 /* Payment popup */

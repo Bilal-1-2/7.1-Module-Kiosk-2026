@@ -1,11 +1,17 @@
-# TODO Steps for Database Charset Update
+# Color Scheme Update TODO
 
-## Step 1: Update api/config.php ✓
+Progress tracked here. Steps from approved plan.
 
-- Added PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4" to options array.
+## Steps:
 
-## Step 2: Verify no other connections need charset.
+- [ ] 1. Create TODO.md (current)
+- [x] 2. Edit assets/CSS/style.css
+- [x] 3. Edit assets/CSS/includes/bestel-overzicht.css
+- [x] 4. Edit assets/CSS/includes/detail.css
+- [x] 5. Edit assets/CSS/idle.css
+- [x] 6. Edit index.html (inline styles)
+- [x] 7. Verify no other color files needed (search_files if issues)
+- [x] 8. Test changes (manual browser refresh or command)
+- [x] Complete
 
-## Step 3: Test database connections.
-
-## Step 4: (Optional) Investigate test_db.html button issue.
+Updated after each step.

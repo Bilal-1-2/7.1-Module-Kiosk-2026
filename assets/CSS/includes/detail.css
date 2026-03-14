@@ -5,7 +5,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(5, 54, 49, 0.5);
   z-index: -1;
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -22,13 +22,13 @@
   left: 0%;
   width: 100%;
   height: 90vh;
-  background-color: white;
+  background-color: #ffb181;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   border-radius: 30px 30px 0 0;
   transition: bottom 0.3s ease-in-out;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 -2px 10px rgba(5, 54, 49, 0.1);
   padding: 20px;
   z-index: 2;
   overflow-y: auto;
@@ -45,8 +45,8 @@
   transform: translateX(-50%);
   font-size: 3rem;
   cursor: pointer;
-  color: #333;
-  background: white;
+  color: #053631;
+  background: #ffb181;
   border-radius: 50%;
   border: none;
   width: 60px;
@@ -55,7 +55,7 @@
   display: none;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 5px rgba(5, 54, 49, 0.2);
 }
 
 .detail-close.visible {
@@ -79,7 +79,7 @@
 
 .detail-description {
   font-size: 2rem;
-  color: #666;
+  color: #053631;
   text-align: left;
   margin-bottom: 20px;
 }
@@ -111,7 +111,7 @@
 .detail-cancel-btn {
   width: 23vw;
   height: 4vh;
-  background-color: #f44336;
+  background-color: #ff7520;
   color: white;
   border: none;
   border-radius: 10px;
@@ -120,7 +120,7 @@
 }
 
 .detail-cancel-btn:hover {
-  background-color: #d32f2f;
+  background-color: #ff7520;
 }
 
 .quantity-selector {
@@ -133,7 +133,7 @@
   width: 50px;
   height: 50px;
   font-size: 2rem;
-  background-color: #2196f3;
+  background-color: #8cd003;
   color: white;
   border: none;
   border-radius: 50%;
@@ -176,7 +176,7 @@
   top: 13%;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #4caf50;
+  background-color: #8cd003;
   color: white;
   padding: 15px 30px;
   border-radius: 10px;
@@ -208,7 +208,7 @@
 }
 
 .dietary-badge.v {
-  background-color: #ff9800;
+  background-color: #ff7520;
 }
 
 /* Product card positioning */
@@ -282,7 +282,7 @@
 }
 
 .pairing-decline-btn:hover {
-  background-color: #d32f2f;
+  background-color: #ff7520;
 }
 
 /* Cart total with calories */
@@ -295,7 +295,7 @@
 
 .total-kcal {
   font-size: 1.6rem;
-  color: #666;
+  color: #053631;
   margin-left: 20px;
   font-weight: bold;
 }
@@ -303,6 +303,6 @@
 .cart-item-kcal {
   display: block;
   font-size: 0.9rem;
-  color: #888;
+  color: #053631;
   margin-top: 5px;
 }

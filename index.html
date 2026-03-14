@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Happy Herbivore Kiosk</title>
     <link rel="stylesheet" href="assets/CSS/style.css" />
+    <link
+      rel="preload"
+      href="assets/fonts/renos-rough.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
     <script src="assets/JS/script.js"></script>
     <style>
       /* Idle screen styles */
@@ -14,7 +21,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgb(255, 255, 255);
+        background-color: #deff78;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -41,7 +48,7 @@
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
-        background-color: white;
+        background-color: #deff78;
         position: relative;
       }
 
@@ -51,7 +58,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: red;
+        background-color: #ff7520;
         color: white;
         border-radius: 6vh;
         font-size: 4vh;
@@ -64,7 +71,7 @@
       #idle-screen .begin:hover,
       #idle-screen .begin:focus,
       #idle-screen .begin:active {
-        background-color: darkred;
+        background-color: #ffb181;
       }
 
       /* Order buttons container - side by side */
@@ -107,7 +114,7 @@
       #products-wrapper {
         width: 100%;
         overflow-y: auto;
-        background-color: #f7f7f7;
+        background-color: #deff78;
       }
 
       /* Products grid */
@@ -126,22 +133,22 @@
       }
 
       .lang-btn {
-    display: flex;
-    width: 20vw;
-    height: 10vh;
-    flex-direction: column;
-    align-items: center;
-    background-color: #f0f0f0;
-    border: 3px solid #ccc;
-    border-radius: 15px;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    justify-content: center;
+        display: flex;
+        width: 20vw;
+        height: 10vh;
+        flex-direction: column;
+        align-items: center;
+        background-color: #ffb181;
+        border: 3px solid #053631;
+        border-radius: 15px;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        justify-content: center;
       }
 
       .lang-btn:hover {
-        background-color: #e0e0e0;
+        background-color: #deff78;
       }
 
       .lang-btn.active {
@@ -163,7 +170,7 @@
       .lang-btn .lang-label {
         font-size: 2.2rem;
         font-weight: bold;
-        color: #333;
+        color: #053631;
       }
     </style>
   </head>
@@ -172,7 +179,7 @@
     <div id="idle-screen">
       <main id="idle-main">
         <img
-          src="assets\images\logos\begin.gif"
+          src="assets\images\logos/begin 1.gif"
           alt=""
           onclick="showOrderOptions()"
           style="height: 35vh"
@@ -182,7 +189,7 @@
         </button>
       </main>
       <main id="order-options" style="display: none">
-        <img src="assets\images\logos\begin.gif" alt="" />
+        <img src="assets\images\logos\begin 1.gif" alt="" />
         <div class="order-buttons">
           <button
             class="begin eat-in"
@@ -198,11 +205,7 @@
           </button>
         </div>
         <div class="language-selector">
-          <button
-            class="lang-btn "
-            id="langNL"
-            onclick="setLanguage('nl')"
-          >
+          <button class="lang-btn" id="langNL" onclick="setLanguage('nl')">
             <img
               src="assets/images/logos/NL-flag.png"
               alt="NL"
@@ -210,7 +213,11 @@
             />
             <span class="lang-label">NL</span>
           </button>
-          <button class="lang-btn active" id="langEN" onclick="setLanguage('en')">
+          <button
+            class="lang-btn active"
+            id="langEN"
+            onclick="setLanguage('en')"
+          >
             <img
               src="assets/images/logos/UK-flag.png"
               alt="EN"
