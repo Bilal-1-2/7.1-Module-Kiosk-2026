@@ -325,7 +325,10 @@ function createPopups() {
     <img src="assets/images/animation/Success.gif" alt="Success" class="thank-you-image">
     <h2 class="detail-title" id="thankYouTitle">Thank you for your order!</h2>
     <p class="order-number" id="orderNumberText">Order Number: <span id="orderNumber"></span></p>
-    <div style="display: flex; gap: 20px; justify-content: center; margin-top: 20px;">
+    <div id="autoFlowStatus" style="text-align: center; margin-top: 30px; font-size: 1.8rem; font-weight: bold;">
+      Printing...
+    </div>
+    <div style="display: none; gap: 20px; justify-content: center; margin-top: 20px; opacity: 0.5;">
         <button class="detail-add-btn" id="printReceiptBtn" onclick="printReceipt()" style="width: auto; padding: 15px 30px;">Print Receipt</button>
         <button class="detail-cancel-btn" id="newOrderBtn" onclick="startNewOrder()" style="width: auto; padding: 15px 30px;">New Order</button>
     </div>
@@ -1012,6 +1015,19 @@ function processPayment(method, event) {
         // Clear cart
         cart = [];
         updateCartCount();
+
+        // Auto print after 3 seconds (TODO step 2)
+        let countdown = 3;
+        const countdownEl = document.getElementById("printCountdown");
+        const statusEl = document.getElementById("autoFlowStatus");
+        const timer = setInterval(() => {
+          countdown--;
+          if (countdownEl) countdownEl.textContent = countdown;
+          if (countdown <= 0) {
+            clearInterval(timer);
+            printReceipt();
+          }
+        }, 1000);
       } else {
         alert("Error creating order: " + (data.error || "Unknown error"));
         document.getElementById("processingOverlay").classList.remove("active");
@@ -1189,6 +1205,11 @@ function printReceipt() {
   setTimeout(function () {
     printWindow.print();
   }, 250);
+
+  // Auto start new order 3 seconds after print (TODO step 3)
+  setTimeout(() => {
+    startNewOrder();
+  }, 3000);
 }
 document.addEventListener(
   "click",
