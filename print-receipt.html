@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Xprinter Bonprinter</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Arial", sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .container {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        padding: 40px;
+        max-width: 500px;
+        width: 100%;
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+        font-size: 28px;
+      }
+
+      .status {
+        background: #f5f5f5;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        min-height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .status.success {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+
+      .status.error {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+
+      .status.loading {
+        background: #d1ecf1;
+        color: #0c5460;
+        border: 1px solid #bee5eb;
+      }
+
+      .button-group {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      button {
+        flex: 1;
+        padding: 15px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary {
+        background: #667eea;
+        color: white;
+      }
+
+      .btn-primary:hover:not(:disabled) {
+        background: #5568d3;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+      }
+
+      .btn-secondary {
+        background: #6c757d;
+        color: white;
+      }
+
+      .btn-secondary:hover:not(:disabled) {
+        background: #5a6268;
+        transform: translateY(-2px);
+      }
+
+      button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .method-tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #e0e0e0;
+      }
+
+      .method-tab {
+        padding: 10px 15px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+        border-bottom: 3px solid transparent;
+        color: #666;
+        transition: all 0.3s;
+      }
+
+      .method-tab.active {
+        color: #667eea;
+        border-bottom-color: #667eea;
+      }
+
+      .method-content {
+        display: none;
+      }
+
+      .method-content.active {
+        display: block;
+      }
+
+      .receipt-preview {
+        background: #f9f9f9;
+        border: 1px dashed #ccc;
+        padding: 15px;
+        border-radius: 5px;
+        font-family: monospace;
+        font-size: 12px;
+        margin-bottom: 15px;
+        max-height: 200px;
+        overflow-y: auto;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+
+      .info-box {
+        background: #e7f3ff;
+        border-left: 4px solid #2196f3;
+        padding: 12px;
+        margin-bottom: 15px;
+        border-radius: 4px;
+        font-size: 13px;
+        color: #0c3d73;
+      }
+
+      a {
+        color: #667eea;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🖨️ Xprinter Bonprinter</h1>
+
+      <div class="status" id="status">Klaar om af te drukken</div>
+
+      <div class="method-tabs">
+        <button class="method-tab active" onclick="switchMethod('usb')">
+          USB Direct
+        </button>
+        <button class="method-tab" onclick="switchMethod('network')">
+          Network
+        </button>
+      </div>
+
+      <!-- USB Method -->
+      <div id="usb" class="method-content active">
+        <div class="info-box">
+          Drukt rechtstreeks naar uw USB printer via WebUSB
+        </div>
+
+        <div class="receipt-preview" id="previewUsb">
+          Koen zijn Awesome Eten ------------------------------------ 1x Awesome
+          Burger Menu EUR 15.00 1x Fritz Cola EUR 3.00
+          ------------------------------------ Totaal: EUR 18.00 Bedankt voor uw
+          bezoek!
+        </div>
+
+        <div class="button-group">
+          <button class="btn-primary" onclick="printUSB()">
+            Print via USB
+          </button>
+          <button class="btn-secondary" onclick="selectUSBDevice()">
+            Printer Selecteren
+          </button>
+        </div>
+      </div>
+
+      <!-- Network Method -->
+      <div id="network" class="method-content">
+        <div class="info-box">Drukt naar netwerkprinter via PHP backend</div>
+
+        <div class="receipt-preview" id="previewNetwork">
+          Koen zijn Awesome Eten ------------------------------------ 1x Awesome
+          Burger Menu EUR 15.00 1x Fritz Cola EUR 3.00
+          ------------------------------------ Totaal: EUR 18.00 Bedankt voor uw
+          bezoek!
+        </div>
+
+        <div class="button-group">
+          <button class="btn-primary" onclick="printNetwork()">
+            Print via Network
+          </button>
+          <button class="btn-secondary" onclick="testConnection()">
+            Verbinding Testen
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let selectedDevice = null;
+
+      // Printer vendor IDs
+      const PRINTER_VENDORS = [
+        0x0483, // STM Microelectronics (Xprinter)
+        0x04b8, // Seiko Epson
+        0x0456, // Microtek
+        0x067b, // Prolific Technology
+      ];
+
+      // Auto-detect and select USB printer
+      async function autoDetectPrinter() {
+        try {
+          if (!navigator.usb) {
+            throw new Error("WebUSB niet ondersteund");
+          }
+
+          // First, try to get already authorized devices
+          const devices = await navigator.usb.getDevices();
+          const printer = devices.find((device) =>
+            PRINTER_VENDORS.includes(device.vendorId),
+          );
+
+          if (printer) {
+            selectedDevice = printer;
+            updateStatus(
+              `✓ Printer gevonden: ${printer.productName || printer.manufacturerName}`,
+              "success",
+            );
+            return true;
+          }
+
+          // If no authorized device found, request user to select one
+          updateStatus(
+            "Geen geauthoriseerde printer gevonden. Selecteer uw printer...",
+            "loading",
+          );
+          const filters = PRINTER_VENDORS.map((vendorId) => ({ vendorId }));
+          selectedDevice = await navigator.usb.requestDevice({ filters });
+          updateStatus(
+            `✓ Printer geselecteerd: ${selectedDevice.productName || selectedDevice.manufacturerName}`,
+            "success",
+          );
+          return true;
+        } catch (error) {
+          if (error.name !== "NotFoundError") {
+            updateStatus(`Auto-detectie fout: ${error.message}`, "error");
+            console.error("Auto-detect Error:", error);
+          }
+          return false;
+        }
+      }
+
+      // Switch between methods
+      function switchMethod(method) {
+        document
+          .querySelectorAll(".method-content")
+          .forEach((el) => el.classList.remove("active"));
+        document
+          .querySelectorAll(".method-tab")
+          .forEach((el) => el.classList.remove("active"));
+
+        document.getElementById(method).classList.add("active");
+        event.target.classList.add("active");
+
+        updateStatus("Methode gewijzigd", "info");
+      }
+
+      // Update status message
+      function updateStatus(message, type = "info") {
+        const statusEl = document.getElementById("status");
+        statusEl.textContent = message;
+        statusEl.className = "status";
+
+        if (type === "success") statusEl.classList.add("success");
+        if (type === "error") statusEl.classList.add("error");
+        if (type === "loading") statusEl.classList.add("loading");
+      }
+
+      // USB Method - Select Device (manual)
+      async function selectUSBDevice() {
+        const success = await autoDetectPrinter();
+        if (!success) {
+          updateStatus("Geen printer geselecteerd", "error");
+        }
+      }
+
+      // USB Method - Print
+      async function printUSB() {
+        try {
+          if (!selectedDevice && !navigator.usb) {
+            updateStatus("WebUSB niet ondersteund in deze browser", "error");
+            return;
+          }
+
+          updateStatus("USB printer verbinden...", "loading");
+
+          // If no device selected, request one
+          if (!selectedDevice) {
+            await selectUSBDevice();
+            if (!selectedDevice) return;
+          }
+
+          await selectedDevice.open();
+
+          if (selectedDevice.configuration === null) {
+            await selectedDevice.selectConfiguration(1);
+          }
+
+          try {
+            await selectedDevice.claimInterface(0);
+          } catch (e) {
+            console.log("Interface al geclaimd, doorgaan...");
+          }
+
+          const encoder = new TextEncoder();
+          const receipt = buildReceipt();
+
+          // Find the endpoint
+          const intf = selectedDevice.configuration.interfaces[0].alternates[0];
+          const endpoint = intf.endpoints.find((e) => e.direction === "out");
+
+          if (!endpoint) {
+            throw new Error("Output endpoint niet gevonden");
+          }
+
+          await selectedDevice.transferOut(
+            endpoint.endpointNumber,
+            encoder.encode(receipt),
+          );
+
+          updateStatus("✓ Bon succesvol geprint!", "success");
+
+          setTimeout(() => {
+            selectedDevice.close();
+          }, 1000);
+        } catch (error) {
+          updateStatus(`USB Fout: ${error.message}`, "error");
+          console.error("USB Print Error:", error);
+        }
+      }
+
+      // Network Method - Test Connection
+      async function testConnection() {
+        try {
+          updateStatus("Verbinding testen...", "loading");
+
+          const response = await fetch("xprint.php?test=1", {
+            method: "GET",
+            timeout: 5000,
+          });
+
+          if (response.ok) {
+            updateStatus("✓ Netwerkprinter bereikbaar!", "success");
+          } else {
+            updateStatus(
+              "✗ Printer niet bereikbaar (HTTP " + response.status + ")",
+              "error",
+            );
+          }
+        } catch (error) {
+          updateStatus(`Verbindingsfout: ${error.message}`, "error");
+        }
+      }
+
+      // Network Method - Print
+      async function printNetwork() {
+        try {
+          updateStatus("Bon naar printer sturen...", "loading");
+
+          const response = await fetch("xprint.php", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              action: "print",
+              receipt: buildReceipt(),
+            }),
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            updateStatus("✓ Bon succesvol geprint!", "success");
+          } else {
+            updateStatus(`Printerfout: ${data.error}`, "error");
+          }
+        } catch (error) {
+          updateStatus(`Netwerkfout: ${error.message}`, "error");
+          console.error("Network Print Error:", error);
+        }
+      }
+
+      // Build receipt content
+      function buildReceipt() {
+        return (
+          "\x1B\x40" +
+          "\n\n" + // Init
+          "\x1B\x61\x01" + // Center align
+          "Happy Herbivore\n" +
+          "\x1B\x61\x00" + // Left align
+          "------------------------------------\n" +
+          "1x Awesome Burger Menu     EUR 15.00\n" +
+          "1x Fritz Cola              EUR  3.00\n" +
+          "------------------------------------\n" +
+          "Totaal:                    EUR 18.00\n" +
+          "\n\n" +
+          "Bedankt voor uw bestelling!\n" +
+          "\n\n" +
+          "\n\n\n" +
+          "\x1D\x56\x00"
+        ); // Cut paper
+      }
+
+      // Check WebUSB support and auto-detect printer on load
+      window.addEventListener("load", () => {
+        if (!navigator.usb) {
+          updateStatus(
+            "⚠️ WebUSB niet ondersteund. Gebruik Network methode.",
+            "error",
+          );
+        } else {
+          updateStatus("Printer wordt automatisch gedetecteerd...", "loading");
+          autoDetectPrinter().then((found) => {
+            if (!found) {
+              updateStatus("Klaar om af te drukken", "info");
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

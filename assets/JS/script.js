@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function () {
     apiBaseUrl = "https://u240653.gluwebsite.nl/Kiosk";
   }
 
-  console.log("API Base URL:", apiBaseUrl);
+  // console.log("API Base URL:", apiBaseUrl);
   window.apiBaseUrl = apiBaseUrl;
 
   // Initialize language to English on page load
@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return response.json();
     })
     .then((data) => {
-      console.log("Products loaded:", data.data.items);
+      // console.log("Products loaded:", data.data.items);
       const products = data.data.items;
       const container = document.getElementsByClassName("scroll-container")[0];
 
@@ -652,6 +652,7 @@ function showProductDetail(id, name, description, price, image, kcal) {
   if (detailkcal) detailkcal.textContent = kcal ? "kcal: " + kcal : "";
   if (detailDescription)
     detailDescription.textContent = description || t.noDescription;
+
   if (detailOverlay) detailOverlay.classList.add("active");
   if (detailPopup) detailPopup.classList.add("active");
   if (detailClose) detailClose.classList.add("visible");
@@ -665,7 +666,7 @@ function showProductDetail(id, name, description, price, image, kcal) {
   }
   if (orderReviewBtn) orderReviewBtn.classList.add("hidden");
 
-  console.log("Product ID set to:", currentProductId);
+  // console.log("Product ID set to:", currentProductId);
 }
 
 // Close product detail popup
@@ -690,7 +691,7 @@ function addToCart() {
   const kcal = productInfo ? productInfo.kcal : 0;
   const product_id = productInfo ? productInfo.product_id : currentProductId;
 
-  console.log("Adding to cart - Product ID:", product_id);
+  // console.log("Adding to cart - Product ID:", product_id);
 
   const existingItem = cart.find((item) => item.name === currentProductName);
   if (existingItem) {
@@ -831,7 +832,7 @@ function removeFromCart(index) {
 // Show payment
 // Show payment
 function showPayment() {
-  console.log("showPayment called");
+  // console.log("showPayment called");
   closeReviewOrder();
   hideOrderReviewButton();
   const t = translations[currentLang];
@@ -907,13 +908,13 @@ function processPayment(method, event) {
   if (event) {
     event.preventDefault();
     event.stopPropagation();
-    console.log("Event prevented");
+    // console.log("Event prevented");
   } else {
     console.warn("No event received in processPayment");
   }
 
-  console.log("Payment method selected:", method);
-  console.log("Current cart:", cart);
+  // console.log("Payment method selected:", method);
+  // console.log("Current cart:", cart);
 
   closePayment();
 
@@ -926,7 +927,7 @@ function processPayment(method, event) {
   const productsWithQuantity = [];
 
   cart.forEach((item) => {
-    console.log("Cart item:", item);
+    // console.log("Cart item:", item);
     if (!item.product_id) {
       console.error("Product missing ID:", item);
       alert("Error: Product missing ID. Please try adding the item again.");
@@ -943,7 +944,7 @@ function processPayment(method, event) {
     });
   });
 
-  console.log("Products with quantity:", productsWithQuantity);
+  // console.log("Products with quantity:", productsWithQuantity);
 
   // Generate pickup number (2 digits)
   const pickupNumber = Math.floor(Math.random() * 90 + 10).toString();
@@ -955,8 +956,8 @@ function processPayment(method, event) {
   };
 
   const url = apiBaseUrl + "/api/orders.php";
-  console.log("Sending to URL:", url);
-  console.log("Order data:", orderData);
+  // console.log("Sending to URL:", url);
+  // console.log("Order data:", orderData);
 
   // Send order to backend
   fetch(url, {
@@ -967,7 +968,7 @@ function processPayment(method, event) {
     body: JSON.stringify(orderData),
   })
     .then((response) => {
-      console.log("Response status:", response.status);
+      // console.log("Response status:", response.status);
 
       if (!response.ok) {
         return response.text().then((text) => {
@@ -978,7 +979,7 @@ function processPayment(method, event) {
       return response.json();
     })
     .then((data) => {
-      console.log("Response data:", data);
+      // console.log("Response data:", data);
 
       // Hide processing popup
       document.getElementById("processingOverlay").classList.remove("active");
@@ -992,9 +993,9 @@ function processPayment(method, event) {
         const displayNumber = ((actualOrderId - 1) % 99) + 1;
         const paddedDisplayNumber = displayNumber.toString().padStart(2, "0");
 
-        console.log(
-          `Order #${actualOrderId} displayed as #${paddedDisplayNumber}`,
-        );
+        // console.log(
+        //   `Order #${actualOrderId} displayed as #${paddedDisplayNumber}`,
+        // );
 
         // Store order data for receipt - ensure total is a number
         lastOrder = {
@@ -1067,7 +1068,7 @@ function startNewOrder() {
   document.getElementById("order-options").style.display = "none";
 }
 
-// Print receipt function - no new window, kiosk direct print
+// Print receipt function
 function printReceipt() {
   if (!lastOrder) {
     console.error("No order to print");
@@ -1251,4 +1252,4 @@ document.addEventListener(
   true,
 ); // Use capture phase to catch events early
 // Run this in the console to check for forms
-console.log(document.querySelectorAll("form"));
+// console.log(document.querySelectorAll("form"));
