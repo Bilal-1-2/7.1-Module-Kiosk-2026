@@ -26,6 +26,11 @@ let orderType = null;
 let lastOrder = null;
 let apiBaseUrl = "";
 
+// Helper function to format prices consistently
+function formatPrice(price) {
+  return parseFloat(price).toFixed(2);
+}
+
 // Get product info by name from the products list
 function getProductByName(name) {
   const products = window.allProducts || [];
@@ -427,7 +432,7 @@ function filterCategory(categoryId, element) {
       <div class="product">
         <img src="${product.filename}">
         <p class="product-name">${product.name}</p>
-        <p class="product-price">€${product.price}</p>
+        <p class="product-price">€${formatPrice(product.price)}</p>
       </div>
     </a>`;
     newProductsContainer.innerHTML += html;
@@ -455,7 +460,7 @@ function renderProducts(products) {
         <img src="${product.filename}">
         ${badge}
         <p class="product-name">${product.name}</p>
-        <p class="product-price">€${product.price}</p>
+        <p class="product-price">€${formatPrice(product.price)}</p>
       </div>
     </a>`;
     products_container.innerHTML += html;
@@ -639,14 +644,14 @@ function showProductDetail(id, name, description, price, image, kcal) {
   if (detailkcal) detailkcal.textContent = kcal ? "kcal: " + kcal : "";
   if (detailDescription)
     detailDescription.textContent = description || t.noDescription;
-  if (detailPrice) detailPrice.textContent = "€" + price;
+  if (detailPrice) detailPrice.textContent = "€" + formatPrice(price);
   if (detailOverlay) detailOverlay.classList.add("active");
   if (detailPopup) detailPopup.classList.add("active");
   if (detailClose) detailClose.classList.add("visible");
   if (detailCancelBtn) detailCancelBtn.textContent = t.cancel;
   if (detailAddBtn) {
     detailAddBtn.innerHTML =
-      t.add + ' <span class="detail-price">€' + price + "</span>";
+      t.add + ' <span class="detail-price">€' + formatPrice(price) + "</span>";
   }
   if (orderReviewBtn) orderReviewBtn.classList.add("hidden");
 
