@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Test API</title>
+  </head>
+  <body>
+    <h1>Test Orders API</h1>
+    <button onclick="testAPI()">Test Orders API</button>
+    <pre id="result"></pre>
+
+    <script>
+      function testAPI() {
+        const apiBaseUrl =
+          window.location.hostname === "localhost" ||
+          window.location.hostname === "127.0.0.1"
+            ? "http://localhost/7.1-Module-Kiosk-2026"
+            : "https://u240653.gluwebsite.nl/Kiosk";
+
+        const url = apiBaseUrl + "/api/orders.php";
+
+        // Test data
+        const testOrder = {
+          products: [26, 27], // Use some valid product IDs from your database
+          pickup_number: "12",
+        };
+
+        document.getElementById("result").textContent =
+          "Sending request to " + url + "...";
+
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(testOrder),
+        })
+          .then((response) => response.text())
+          .then((text) => {
+            document.getElementById("result").textContent = text;
+          })
+          .catch((error) => {
+            document.getElementById("result").textContent = "Error: " + error;
+          });
+      }
+    </script>
+  </body>
+</html>

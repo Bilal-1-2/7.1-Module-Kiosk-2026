@@ -1,0 +1,81 @@
+#idle-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #deff78;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: opacity 0.5s ease-in-out;
+}
+#idle-screen.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Keep the main content behind */
+.scroll-container,
+#products-container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Idle screen content styling */
+#idle-screen main {
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#idle-screen img {
+  height: 35vh;
+}
+
+#idle-screen a {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: white;
+}
+
+#idle-screen a:link,
+#idle-screen a:visited,
+#idle-screen a:hover,
+#idle-screen a:active,
+#idle-screen a:focus {
+  text-decoration: none;
+  color: white;
+  outline: none;
+}
+
+#idle-screen .begin {
+  height: 12vh;
+  width: 60vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ff7520;
+  color: white;
+  border-radius: 6vh;
+  font-size: 4vh;
+  border: 0px;
+  cursor: pointer;
+  text-decoration: none;
+  outline: none;
+}
+
+#idle-screen .begin:hover,
+#idle-screen .begin:focus,
+#idle-screen .begin:active {
+  background-color: #ffb181;
+  text-decoration: none;
+  outline: none;
+}
