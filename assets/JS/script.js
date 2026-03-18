@@ -1067,7 +1067,7 @@ function startNewOrder() {
   document.getElementById("order-options").style.display = "none";
 }
 
-// Print receipt function
+// Print receipt function - no new window, kiosk direct print
 function printReceipt() {
   if (!lastOrder) {
     console.error("No order to print");
@@ -1210,21 +1210,34 @@ function printReceipt() {
     </html>
   `;
 
-  // Open print window
-  const printWindow = window.open("", "_blank");
+  // Print
+  const printWindow = window.open(
+    "",
+    "printWindow",
+    "width=800,height=600,scrollbars=yes",
+  );
   printWindow.document.write(receiptContent);
   printWindow.document.close();
+
+  // Focus and print
   printWindow.focus();
-
-  // Wait for content to load then print
-  setTimeout(function () {
+  printWindow.onload = function () {
     printWindow.print();
-  }, 250);
+    printWindow.close();
+  };
 
-  // Auto start new order 3 seconds after print (TODO step 3)
-  setTimeout(() => {
-    startNewOrder();
-  }, 3000);
+  // Auto start new order after print dialog closes (user cancels/prints)
+  const checkClosed = setInterval(() => {
+    try {
+      if (printWindow.closed) {
+        clearInterval(checkClosed);
+        setTimeout(startNewOrder, 1000);
+      }
+    } catch (e) {
+      clearInterval(checkClosed);
+      setTimeout(startNewOrder, 1000);
+    }
+  }, 500);
 }
 document.addEventListener(
   "click",
