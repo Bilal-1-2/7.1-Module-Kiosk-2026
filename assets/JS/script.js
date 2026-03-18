@@ -28,7 +28,8 @@ let apiBaseUrl = "";
 
 // Helper function to format prices consistently
 function formatPrice(price) {
-  return parseFloat(price).toFixed(2);
+  const numPrice = parseFloat(price);
+  return isNaN(numPrice) ? "0.00" : numPrice.toFixed(2);
 }
 
 // Get product info by name from the products list
@@ -595,6 +596,13 @@ function changeQuantity(delta) {
   if (currentQuantity < 1) currentQuantity = 1;
   if (currentQuantity > 99) currentQuantity = 99;
   quantityDisplay.textContent = currentQuantity;
+
+  // Update detail price to reflect new quantity
+  const detailPrice = document.getElementById("detailPrice");
+  if (detailPrice) {
+    detailPrice.textContent =
+      "€" + formatPrice(currentProductPrice * currentQuantity);
+  }
 }
 
 // Show order options (Eat-in / Take-out)
@@ -644,14 +652,16 @@ function showProductDetail(id, name, description, price, image, kcal) {
   if (detailkcal) detailkcal.textContent = kcal ? "kcal: " + kcal : "";
   if (detailDescription)
     detailDescription.textContent = description || t.noDescription;
-  if (detailPrice) detailPrice.textContent = "€" + formatPrice(price);
   if (detailOverlay) detailOverlay.classList.add("active");
   if (detailPopup) detailPopup.classList.add("active");
   if (detailClose) detailClose.classList.add("visible");
   if (detailCancelBtn) detailCancelBtn.textContent = t.cancel;
   if (detailAddBtn) {
     detailAddBtn.innerHTML =
-      t.add + ' <span class="detail-price">€' + formatPrice(price) + "</span>";
+      t.add +
+      ' <span class="detail-price" id="detailPrice">€' +
+      formatPrice(price * currentQuantity) +
+      "</span>";
   }
   if (orderReviewBtn) orderReviewBtn.classList.add("hidden");
 
