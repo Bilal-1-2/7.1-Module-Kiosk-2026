@@ -26,10 +26,26 @@ let orderType = null;
 let lastOrder = null;
 let apiBaseUrl = "";
 
+// Printer variables
+let selectedPrinter = null;
+let printerInterface = null;
+let printerEndpoint = null;
+
+// Printer vendor IDs
+const PRINTER_VENDORS = [
+  0x0483, // STM Microelectronics (Xprinter)
+  0x04b8, // Seiko Epson
+  0x0456, // Microtek
+  0x067b, // Prolific Technology
+  0x0416, // Bixolon
+  0x0fe6, // Star Micronics
+];
+
 // Helper function to format prices consistently
 function formatPrice(price) {
   const numPrice = parseFloat(price);
-  return isNaN(numPrice) ? "0.00" : numPrice.toFixed(2);
+  const formatted = isNaN(numPrice) ? "0.00" : numPrice.toFixed(2);
+  return "€" + formatted;
 }
 
 // Get product info by name from the products list
@@ -106,7 +122,6 @@ document.addEventListener("DOMContentLoaded", function () {
     apiBaseUrl = "https://u240653.gluwebsite.nl/Kiosk";
   }
 
-  // console.log("API Base URL:", apiBaseUrl);
   window.apiBaseUrl = apiBaseUrl;
 
   // Initialize language to English on page load
@@ -121,7 +136,6 @@ document.addEventListener("DOMContentLoaded", function () {
       return response.json();
     })
     .then((data) => {
-      // console.log("Products loaded:", data.data.items);
       const products = data.data.items;
       const container = document.getElementsByClassName("scroll-container")[0];
 
@@ -175,9 +189,214 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Error loading products:", error);
     });
 
-  // Add popup HTML to body (your existing popup creation code)
+  // Add popup HTML to body
   createPopups();
+
+  // Initialize printer on load
+  initPrinter();
 });
+
+// Initialize printer
+async function initPrinter() {
+  if (!navigator.usb) {
+    console.log("WebUSB niet ondersteund in deze browser");
+    return;
+  }
+
+  try {
+    const devices = await navigator.usb.getDevices();
+    const printer = devices.find((device) =>
+      PRINTER_VENDORS.includes(device.vendorId),
+    );
+
+    if (printer) {
+      selectedPrinter = printer;
+      console.log("Printer gevonden:", printer.productName);
+    }
+  } catch (error) {
+    console.error("Printer init error:", error);
+  }
+}
+
+// Auto-detect and select USB printer
+async function selectPrinter() {
+  try {
+    if (!navigator.usb) {
+      throw new Error("WebUSB niet ondersteund");
+    }
+
+    const filters = PRINTER_VENDORS.map((vendorId) => ({ vendorId }));
+    selectedPrinter = await navigator.usb.requestDevice({ filters });
+
+    console.log("Printer geselecteerd:", selectedPrinter.productName);
+    return true;
+  } catch (error) {
+    console.error("Printer selectie error:", error);
+    return false;
+  }
+}
+
+// Build ESC/POS receipt content
+function buildReceiptContent(order, displayNumber, totalAmount) {
+  const date = new Date();
+  const formattedDate = date.toLocaleDateString("nl-NL");
+  const formattedTime = date.toLocaleTimeString("nl-NL", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  return (
+    "\x1B\x40" + // Initialize printer
+    "\x1B\x61\x01" + // Center align
+    "Happy Herbivore\n" +
+    "Plant-Based Kitchen\n" +
+    "\x1B\x61\x00" + // Left align
+    "--------------------------------\n" +
+    `Bestelnr: #${displayNumber}\n` +
+    `Datum: ${formattedDate} ${formattedTime}\n` +
+    `Type: ${orderType === "eat-in" ? "Eat-in" : "Take-out"}\n` +
+    "--------------------------------\n" +
+    order.items
+      .map(
+        (item) =>
+          `${item.name.substring(0, 20).padEnd(20)} ${item.quantity}x  EUR ${(item.price * item.quantity).toFixed(2)}\n`,
+      )
+      .join("") +
+    "--------------------------------\n" +
+    "\x1B\x61\x01" + // Center align
+    `TOTAAL: EUR ${totalAmount.toFixed(2)}\n` +
+    "\x1B\x61\x00" + // Left align
+    "\n" +
+    "Bedankt voor uw bestelling!\n" +
+    "Geniet van uw maaltijd \n" +
+    "\n\n\n" +
+    "\x1D\x56\x00" // Cut paper
+  );
+}
+
+// Print via USB
+async function printViaUSB(order, displayNumber, totalAmount) {
+  try {
+    if (!selectedPrinter) {
+      const selected = await selectPrinter();
+      if (!selected) {
+        throw new Error("Geen printer geselecteerd");
+      }
+    }
+
+    await selectedPrinter.open();
+
+    if (selectedPrinter.configuration === null) {
+      await selectedPrinter.selectConfiguration(1);
+    }
+
+    try {
+      await selectedPrinter.claimInterface(0);
+    } catch (e) {
+      console.log("Interface al geclaimd, doorgaan...");
+    }
+
+    const encoder = new TextEncoder();
+    const receipt = buildReceiptContent(order, displayNumber, totalAmount);
+
+    // Find the endpoint
+    const intf = selectedPrinter.configuration.interfaces[0].alternates[0];
+    const endpoint = intf.endpoints.find((e) => e.direction === "out");
+
+    if (!endpoint) {
+      throw new Error("Output endpoint niet gevonden");
+    }
+
+    await selectedPrinter.transferOut(
+      endpoint.endpointNumber,
+      encoder.encode(receipt),
+    );
+
+    console.log("Bon succesvol geprint via USB");
+
+    setTimeout(() => {
+      selectedPrinter.close();
+    }, 1000);
+
+    return true;
+  } catch (error) {
+    console.error("USB Print Error:", error);
+    throw error;
+  }
+}
+
+// Print via network (fallback)
+async function printViaNetwork(order, displayNumber, totalAmount) {
+  try {
+    const receipt = buildReceiptContent(order, displayNumber, totalAmount);
+
+    const response = await fetch(apiBaseUrl + "/api/print.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        receipt: receipt,
+        printer_ip: "192.168.1.100", // Configureer dit
+        port: 9100, // Standaard printer poort
+      }),
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      console.log("Bon succesvol geprint via network");
+      return true;
+    } else {
+      throw new Error(data.error || "Onbekende fout");
+    }
+  } catch (error) {
+    console.error("Network Print Error:", error);
+    throw error;
+  }
+}
+
+// Main print function
+async function printReceipt() {
+  if (!lastOrder) {
+    console.error("No order to print");
+    return;
+  }
+
+  const order = lastOrder;
+
+  // Calculate display number for receipt
+  const displayNumber = ((order.order_id - 1) % 99) + 1;
+  const paddedDisplayNumber = displayNumber.toString().padStart(2, "0");
+
+  // Ensure total is a number
+  const totalAmount =
+    typeof order.total === "number"
+      ? order.total
+      : parseFloat(order.total) || 0;
+
+  try {
+    // Probeer eerst USB
+    if (navigator.usb) {
+      await printViaUSB(order, paddedDisplayNumber, totalAmount);
+    } else {
+      // Fallback naar network
+      await printViaNetwork(order, paddedDisplayNumber, totalAmount);
+    }
+
+    // Wacht kort en ga dan naar nieuw order
+    setTimeout(() => {
+      startNewOrder();
+    }, 2000);
+  } catch (error) {
+    console.error("Printen mislukt:", error);
+    // Toon foutmelding maar ga wel door naar nieuw order
+    alert("Bon kon niet worden geprint. Ga naar de balie voor hulp.");
+    setTimeout(() => {
+      startNewOrder();
+    }, 3000);
+  }
+}
 
 // Function to create all popups
 function createPopups() {
@@ -263,48 +482,7 @@ function createPopups() {
       </button>
     </div>
     <button type="button" class="detail-cancel-btn" id="paymentCancelBtn">Cancel</button>
-`;
-
-  // Then add event listeners after creating the popup
-  // In createPopups() function, update the setTimeout section:
-
-  setTimeout(() => {
-    document
-      .getElementById("cardPaymentBtn")
-      ?.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        processPayment("card", e); // Pass the event
-        return false;
-      });
-
-    document
-      .getElementById("applePaymentBtn")
-      ?.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        processPayment("apple", e); // Pass the event
-        return false;
-      });
-
-    document
-      .getElementById("googlePaymentBtn")
-      ?.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        processPayment("google", e); // Pass the event
-        return false;
-      });
-
-    document
-      .getElementById("paymentCancelBtn")
-      ?.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        closePayment();
-        return false;
-      });
-  }, 100);
+  `;
 
   // Processing popup
   const processingOverlay = document.createElement("div");
@@ -331,12 +509,8 @@ function createPopups() {
     <img src="assets/images/animation/Success.gif" alt="Success" class="thank-you-image">
     <h2 class="detail-title" id="thankYouTitle">Thank you for your order!</h2>
     <p class="order-number" id="orderNumberText">Order Number: <span id="orderNumber"></span></p>
-    <div id="autoFlowStatus" style="text-align: center; margin-top: 30px; font-size: 1.8rem; font-weight: bold;">
-      Printing...
-    </div>
-    <div style="display: none; gap: 20px; justify-content: center; margin-top: 20px; opacity: 0.5;">
-        <button class="detail-add-btn" id="printReceiptBtn" onclick="printReceipt()" style="width: auto; padding: 15px 30px;">Print Receipt</button>
-        <button class="detail-cancel-btn" id="newOrderBtn" onclick="startNewOrder()" style="width: auto; padding: 15px 30px;">New Order</button>
+    <div id="autoFlowStatus" style="text-align: center; margin-top: 30px; font-size: 1.8rem; font-weight: bold; color: #8cd003;">
+      Bon wordt afgedrukt...
     </div>
   `;
 
@@ -346,6 +520,45 @@ function createPopups() {
   orderReviewBtn.id = "orderReviewBtn";
   orderReviewBtn.innerHTML = `<span id="reviewBtnText">Review Order</span><span id="cartCount" class="cart-count">0</span>`;
   orderReviewBtn.onclick = showReviewOrder;
+
+  // Add event listeners for payment buttons
+  setTimeout(() => {
+    document
+      .getElementById("cardPaymentBtn")
+      ?.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        processPayment("card", e);
+        return false;
+      });
+
+    document
+      .getElementById("applePaymentBtn")
+      ?.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        processPayment("apple", e);
+        return false;
+      });
+
+    document
+      .getElementById("googlePaymentBtn")
+      ?.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        processPayment("google", e);
+        return false;
+      });
+
+    document
+      .getElementById("paymentCancelBtn")
+      ?.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        closePayment();
+        return false;
+      });
+  }, 100);
 
   // Append all elements to body
   document.body.appendChild(detailOverlay);
@@ -665,8 +878,6 @@ function showProductDetail(id, name, description, price, image, kcal) {
       "</span>";
   }
   if (orderReviewBtn) orderReviewBtn.classList.add("hidden");
-
-  // console.log("Product ID set to:", currentProductId);
 }
 
 // Close product detail popup
@@ -690,8 +901,6 @@ function addToCart() {
   const productInfo = getProductByName(currentProductName);
   const kcal = productInfo ? productInfo.kcal : 0;
   const product_id = productInfo ? productInfo.product_id : currentProductId;
-
-  // console.log("Adding to cart - Product ID:", product_id);
 
   const existingItem = cart.find((item) => item.name === currentProductName);
   if (existingItem) {
@@ -829,10 +1038,9 @@ function removeFromCart(index) {
   updateCartCount();
   showReviewOrder();
 }
-// Show payment
+
 // Show payment
 function showPayment() {
-  // console.log("showPayment called");
   closeReviewOrder();
   hideOrderReviewButton();
   const t = translations[currentLang];
@@ -851,8 +1059,6 @@ function showPayment() {
   // Make sure buttons have the correct type AND prevent default
   document.querySelectorAll(".payment-btn").forEach((btn) => {
     btn.setAttribute("type", "button");
-
-    // Remove any existing click listeners and add new ones with preventDefault
     btn.replaceWith(btn.cloneNode(true));
   });
 
@@ -908,13 +1114,7 @@ function processPayment(method, event) {
   if (event) {
     event.preventDefault();
     event.stopPropagation();
-    // console.log("Event prevented");
-  } else {
-    console.warn("No event received in processPayment");
   }
-
-  // console.log("Payment method selected:", method);
-  // console.log("Current cart:", cart);
 
   closePayment();
 
@@ -923,11 +1123,10 @@ function processPayment(method, event) {
   document.getElementById("processingOverlay").classList.add("active");
   document.getElementById("processingPopup").classList.add("active");
 
-  // FIX: Send products with quantities instead of duplicate IDs
+  // Send products with quantities
   const productsWithQuantity = [];
 
   cart.forEach((item) => {
-    // console.log("Cart item:", item);
     if (!item.product_id) {
       console.error("Product missing ID:", item);
       alert("Error: Product missing ID. Please try adding the item again.");
@@ -937,27 +1136,22 @@ function processPayment(method, event) {
       return;
     }
 
-    // Add the product with its quantity
     productsWithQuantity.push({
       product_id: item.product_id,
       quantity: item.quantity,
     });
   });
 
-  // console.log("Products with quantity:", productsWithQuantity);
-
   // Generate pickup number (2 digits)
   const pickupNumber = Math.floor(Math.random() * 90 + 10).toString();
 
-  // Prepare order data with the new format
+  // Prepare order data
   const orderData = {
-    products: productsWithQuantity, // Now sending objects with product_id and quantity
+    products: productsWithQuantity,
     pickup_number: pickupNumber,
   };
 
   const url = apiBaseUrl + "/api/orders.php";
-  // console.log("Sending to URL:", url);
-  // console.log("Order data:", orderData);
 
   // Send order to backend
   fetch(url, {
@@ -968,8 +1162,6 @@ function processPayment(method, event) {
     body: JSON.stringify(orderData),
   })
     .then((response) => {
-      // console.log("Response status:", response.status);
-
       if (!response.ok) {
         return response.text().then((text) => {
           console.error("Error response:", text);
@@ -979,8 +1171,6 @@ function processPayment(method, event) {
       return response.json();
     })
     .then((data) => {
-      // console.log("Response data:", data);
-
       // Hide processing popup
       document.getElementById("processingOverlay").classList.remove("active");
       document.getElementById("processingPopup").classList.remove("active");
@@ -993,16 +1183,12 @@ function processPayment(method, event) {
         const displayNumber = ((actualOrderId - 1) % 99) + 1;
         const paddedDisplayNumber = displayNumber.toString().padStart(2, "0");
 
-        // console.log(
-        //   `Order #${actualOrderId} displayed as #${paddedDisplayNumber}`,
-        // );
-
-        // Store order data for receipt - ensure total is a number
+        // Store order data for receipt
         lastOrder = {
           order_id: actualOrderId,
           display_number: displayNumber,
           pickup_number: data.data.pickup_number,
-          total: parseFloat(data.data.price_total) || 0, // Convert to number
+          total: parseFloat(data.data.price_total) || 0,
           items: cart.map((item) => ({
             name: item.name,
             price: item.price,
@@ -1021,7 +1207,6 @@ function processPayment(method, event) {
           paddedDisplayNumber +
           "</span>";
 
-        document.getElementById("newOrderBtn").textContent = t.newOrder;
         document.getElementById("thankYouOverlay").classList.add("active");
         document.getElementById("thankYouPopup").classList.add("active");
 
@@ -1032,18 +1217,10 @@ function processPayment(method, event) {
         cart = [];
         updateCartCount();
 
-        // Auto print after 3 seconds (TODO step 2)
-        let countdown = 3;
-        const countdownEl = document.getElementById("printCountdown");
-        const statusEl = document.getElementById("autoFlowStatus");
-        const timer = setInterval(() => {
-          countdown--;
-          if (countdownEl) countdownEl.textContent = countdown;
-          if (countdown <= 0) {
-            clearInterval(timer);
-            printReceipt();
-          }
-        }, 1000);
+        // Auto print after 2 seconds
+        setTimeout(() => {
+          printReceipt();
+        }, 2000);
       } else {
         alert("Error creating order: " + (data.error || "Unknown error"));
         document.getElementById("processingOverlay").classList.remove("active");
@@ -1059,6 +1236,7 @@ function processPayment(method, event) {
       showOrderReviewButton();
     });
 }
+
 // Start new order
 function startNewOrder() {
   document.getElementById("thankYouOverlay").classList.remove("active");
@@ -1068,188 +1246,13 @@ function startNewOrder() {
   document.getElementById("order-options").style.display = "none";
 }
 
-// Print receipt function
-function printReceipt() {
-  if (!lastOrder) {
-    console.error("No order to print");
-    alert("No order to print");
-    return;
-  }
-
-  const t = translations[currentLang];
-  const order = lastOrder;
-
-  // Calculate display number for receipt
-  const displayNumber = ((order.order_id - 1) % 99) + 1;
-  const paddedDisplayNumber = displayNumber.toString().padStart(2, "0");
-
-  // Ensure total is a number
-  const totalAmount =
-    typeof order.total === "number"
-      ? order.total
-      : parseFloat(order.total) || 0;
-
-  // Create receipt HTML
-  const receiptContent = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Order Receipt</title>
-        <style>
-            body {
-                font-family: 'Courier New', monospace;
-                width: 300px;
-                margin: 0 auto;
-                padding: 20px;
-                font-size: 14px;
-            }
-            .header {
-                text-align: center;
-                margin-bottom: 20px;
-                border-bottom: 2px dashed #000;
-                padding-bottom: 10px;
-            }
-            .header h1 {
-                font-size: 20px;
-                margin: 5px 0;
-            }
-            .order-info {
-                margin-bottom: 15px;
-            }
-            .order-number {
-                font-size: 24px;
-                font-weight: bold;
-                text-align: center;
-                margin: 10px 0;
-            }
-            .items {
-                margin: 15px 0;
-                border-top: 1px solid #000;
-                border-bottom: 1px solid #000;
-                padding: 10px 0;
-            }
-            .item {
-                display: flex;
-                justify-content: space-between;
-                margin: 5px 0;
-            }
-            .item-name {
-                flex: 2;
-            }
-            .item-qty {
-                flex: 1;
-                text-align: center;
-            }
-            .item-price {
-                flex: 1;
-                text-align: right;
-            }
-            .total {
-                display: flex;
-                justify-content: space-between;
-                font-weight: bold;
-                font-size: 16px;
-                margin-top: 10px;
-                padding-top: 10px;
-                border-top: 2px solid #000;
-            }
-            .footer {
-                text-align: center;
-                margin-top: 20px;
-                font-size: 12px;
-                border-top: 1px dashed #000;
-                padding-top: 10px;
-            }
-            .datetime {
-                text-align: center;
-                font-size: 12px;
-                margin: 5px 0;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="header">
-            <h1>Happy Herbivore</h1>
-            <p>Healthy Plant-Based Kitchen</p>
-        </div>
-        
-        <div class="order-info">
-            <div class="order-number">#${paddedDisplayNumber}</div>
-            <div class="datetime">${new Date().toLocaleString()}</div>
-            <div>Order Type: ${orderType === "eat-in" ? "Eat-in" : "Take-out"}</div>
-        </div>
-
-        <div class="items">
-            ${
-              order.items
-                ? order.items
-                    .map(
-                      (item) => `
-                <div class="item">
-                    <span class="item-name">${item.name}</span>
-                    <span class="item-qty">x${item.quantity}</span>
-                    <span class="item-price">€${(item.price * item.quantity).toFixed(2)}</span>
-                </div>
-              `,
-                    )
-                    .join("")
-                : ""
-            }
-        </div>
-
-        <div class="total">
-            <span>${t.total}:</span>
-            <span>€${totalAmount.toFixed(2)}</span>
-        </div>
-
-        <div class="footer">
-            <p>Thank you for your order!</p>
-            <p>Please show this receipt when picking up</p>
-            <p>Enjoy your meal! 🌱</p>
-        </div>
-    </body>
-    </html>
-  `;
-
-  // Print
-  const printWindow = window.open(
-    "",
-    "printWindow",
-    "width=800,height=600,scrollbars=yes",
-  );
-  printWindow.document.write(receiptContent);
-  printWindow.document.close();
-
-  // Focus and print
-  printWindow.focus();
-  printWindow.onload = function () {
-    printWindow.print();
-    printWindow.close();
-  };
-
-  // Auto start new order after print dialog closes (user cancels/prints)
-  const checkClosed = setInterval(() => {
-    try {
-      if (printWindow.closed) {
-        clearInterval(checkClosed);
-        setTimeout(startNewOrder, 1000);
-      }
-    } catch (e) {
-      clearInterval(checkClosed);
-      setTimeout(startNewOrder, 1000);
-    }
-  }, 500);
-}
+// Global click handler for payment buttons
 document.addEventListener(
   "click",
   function (e) {
-    // If the clicked element is a payment button or inside a payment popup
     if (e.target.closest(".payment-btn") || e.target.closest("#paymentPopup")) {
       e.preventDefault();
-      console.log("Global click handler prevented default on payment button");
     }
   },
   true,
-); // Use capture phase to catch events early
-// Run this in the console to check for forms
-// console.log(document.querySelectorAll("form"));
+);

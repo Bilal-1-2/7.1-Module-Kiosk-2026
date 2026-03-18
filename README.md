@@ -1,4 +1,4 @@
-﻿# Happy Herbivore Kiosk - Kleuren Update
+# Happy Herbivore Kiosk - Kleuren Update
 
 ## Installatie en Opstart Instructies
 
@@ -44,7 +44,8 @@ Alle tekst wit voor optimale leesbaarheid.
 
 ### vidoes
 
-- https://youtube.com/shorts/aSKOxjcrL7Y  
+- https://youtube.com/shorts/aSKOxjcrL7Y
 - https://youtube.com/shorts/IPiOgrunRQs?feature=share
 ### presentatie
-https://youtube.com/shorts/IPiOgrunRQs
+- https://youtube.com/shorts/IPiOgrunRQs
+- https://youtube.com/shorts/f5tkqhknBzU?feature=share
